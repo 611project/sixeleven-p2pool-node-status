@@ -57,7 +57,7 @@
       <div class='container'>
         <p class='text-center'>
 	  <br/>
-          Donate <code>1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw</code>
+          Donate <code class="donation_address"></code>
         </p>
       </div>
 
@@ -65,7 +65,7 @@
 
     <div class="container">
       <div class="page-header">
-        <h1>bitcoin.d4rkn3t.com - Public BTC P2Pool</h1>
+        <h1>Public BTC P2Pool</h1>
         <b>
           <small>
             <span id='_node' class='hidden'>Node: </span>
@@ -183,7 +183,7 @@
       <div class='container'>
         <hr>
         <p class='text-center'>
-          Donate <code>1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw</code>
+          Donate <code class="donation_address"></code>
         </p>
 	<br/>
       </div>
@@ -349,6 +349,8 @@
       $('#block_value')
         .text(parseFloat(local_stats.block_value).toFixed(8))
         .append(' ').append(currency.clone());
+
+      $('.donation_address').text(config.donation_address);
 	
       $('#efficiency')
 	.text(parseFloat(local_stats.efficiency * 100).toFixed(2) + '%');

@@ -9,5 +9,7 @@ var config = {
   use_fontawesome: true,
   show_github_ribbon: true,
   // HTML to load at top of page
-  navbar_url : ""
+  navbar_url : "",
+
+  donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw"
 }
