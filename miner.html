@@ -118,6 +118,8 @@
         if(period.length < 3) {
             window.location.hash = miner_hash;
             window.location.search = "Day";
+        } else if (miner_hash == "") {
+            window.location = '/';
         } else {
             d3.json('../web/currency_info', function(currency_info_response) {
                 currency_info = currency_info_response;
