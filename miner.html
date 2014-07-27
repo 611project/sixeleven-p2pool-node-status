@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Public Bitcoin P2Pool - Share</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <script type="text/javascript" src="d3.v2.min.js"></script>
+
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-dateFormat.min.js"></script>
+
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/charts.js"></script>
+
+    <script src="js/config.json"></script>
+    <script src="js/init.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="grid.css" rel="stylesheet">
+
+    <style type="text/css">
+      body {
+        font-family: 'Roboto', Helvetica, sans-serif;
+        font-size: 13px;
+        margin-top: 10px;
+      }
+      #myModal .modal-dialog {
+        width: 70%;/* your width */
+      }
+    </style>
+
+    <style type="text/css">
+        line {
+            stroke: black;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+        
+        .plotline {
+            stroke-width: 1.4;
+            fill: none;
+        }
+        
+        text {
+            font-family: Sans-serif;
+            font-size: 12px;
+        }
+    </style>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id='header'></div>
+
+    <div class="container">
+      <div class="page-header">
+        <h1 id="page-title"></h1>
+        <b>
+          <small>
+            <span id='_node' class='hidden'>Node: </span>
+            <span id='node' class='hidden'></span><br/>
+            Updated: <span id='updated'></span>
+          </small>
+        </b>
+      </div>
+
+      <p>Periods: <span id="period_chooser"></span> Current: <span id="period_current"></span></p>
+        
+      <div id="warnings"></div>
+
+      <div id="miners">
+        <p>Loading...</p>
+      </div>
+    </div> <!-- /container -->
+
+    <div id='footer'></div>
+
+    <script type="text/javascript">
+        var current_hash = null;
+        var miner_hash = document.location.hash.substr(1);
+        var currency_info;
+
+        var h1 = d3.select('#page-title');
+            h1.text('');
+            h1.append('a').attr('href', '.').text('Public Bitcoin P2Pool');
+            h1.append('span').text(' > ' + miner_hash);
+
+        periods = ["Day", "Week", "Month", "Year"];
+        d3.select("#period_chooser").selectAll().data(periods).enter().append("a")
+            .text(function(period) { return period })
+            .attr('href', function(period){ return "?" + period + "#" + miner_hash})
+            .attr("style", function(d, i) { return (i == 0 ? "" : "margin-left:.4em;") + "color:blue;text-decoration:underline;cursor:pointer" });
+
+        var period = window.location.search.substr(1);
+
+        if(period.length < 3) {
+            window.location.hash = miner_hash;
+            window.location.search = "Day";
+        } else {
+            d3.json('../web/currency_info', function(currency_info_response) {
+                currency_info = currency_info_response;
+            });
+
+            load();
+        }
+
+        function load() {
+            var lowerperiod = period.toLowerCase();
+
+            d3.select("#period_current").text(period);
+
+            d3.json("../web/graph_data/miner_hash_rates/last_" + lowerperiod, function(data) {
+                d3.json("../web/graph_data/miner_dead_hash_rates/last_" + lowerperiod, function(dead_data) {
+                    d3.json("../web/graph_data/current_payouts/last_" + lowerperiod, function(current_payouts) {
+                        d3.select("#miners").selectAll("*").remove();
+
+                        var div = d3.select("#miners").selectAll().data([miner_hash]).enter().append("div");
+                        div.append('h3').text(miner_hash);
+
+                        var link_icon= $('<i/>').addClass('fa fa-external-link fa-fw');
+                        var blockinfo= $('<a/>')
+                          .attr('href', currency_info.address_explorer_url_prefix + miner_hash)
+                          .attr('target', '_blank').append(link_icon);
+
+                        //div.append(blockinfo);
+                        
+                        div.append("svg:svg").each(function(u) {
+                            plot(d3.select(this), "H/s", "H", [
+                                {"data": data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#0000FF", "label": "Total"},
+                                {"data": dead_data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#FF0000", "label": "Dead"}
+                            ]);
+                        });
+
+                        div.append("svg:svg").each(function(u) {
+                            plot(d3.select(this), currency_info.symbol, null, [
+                                {"data": current_payouts.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#0000FF"}
+                            ]);
+                        });
+                    });
+                });
+            });
+        }
+    </script>
+  </body>
+</html>

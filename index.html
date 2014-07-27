@@ -69,12 +69,6 @@
 
       <div id='node_alerts' class="alert alert-danger hidden"></div>
 
-      <!-- We should have a possiblity showing other miners on our node what
-           happened or if we have other things to tell them. -->
-      <div class="alert alert-info hidden">
-        <p><b>2013-12-13: This is a message to miners on my node telling them something really cool.</b></p>
-      </div>
-
       <center>
         <div class='container'>
           <button id='day' type="button" class="hashrate btn btn-info">Day</button>
@@ -271,11 +265,11 @@
 
         local_payout += current_payouts[payout_addr] || 0;
 
-        address_span= $('<span/>').addClass('coin_address').text(address);
-        link_icon= $('<i/>').addClass('fa fa-external-link fa-fw');
-        blockinfo= $('<a/>')
-          .attr('href', currency_info.address_explorer_url_prefix + address)
-          .attr('target', '_blank').append(link_icon);
+        var address_link= $('<a/>')
+          .attr('href', 'miner.html#' + address)
+          .text(address);
+
+        address_span= $('<span/>').addClass('coin_address').append(address_link);
 
         doa= local_stats.miner_dead_hash_rates[address] || 0;
         doa_prop= (parseFloat(doa) / parseFloat(hashrate)) * 100;
@@ -285,9 +279,7 @@
 
         tr.append($('<td/>').addClass('text-left')
           .append(address_span)
-          .append('&nbsp;')
-          //.append(chart_icon)
-          .append(blockinfo));
+          .append('&nbsp;'));
         tr.append($('<td/>').addClass('text-right')
           .append(formatHashrate(hashrate)));
         tr.append($('<td/>').addClass('text-right')
