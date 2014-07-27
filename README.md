@@ -124,7 +124,7 @@ If this variable is set to `false`, the UI displays the p2pool currency symbol (
 
 - Replace HighCharts by another graph lib which can still be used on nodes having a fee (nodes considered as commercial)
 
-- Add section for recent shares and share tree in network
+- Add section for ~~recent shares and~~ share tree in network
 
 - More graphs for the p2pool node
 
