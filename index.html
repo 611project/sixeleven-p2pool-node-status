@@ -453,9 +453,13 @@
       }
       $.each(recent_shares, function(key, block) {
 	hash = block;
+
+        blockinfo= $('<a/>')
+          .attr('href', 'share.html#' + hash).text(hash);
+
         tr= $('<tr/>').attr('id', hash);
         tr.append($('<td/>')
-          .append(hash));
+          .append(blockinfo));
         $('#recent_shares').append(tr);
       });
     });
