@@ -25,7 +25,4 @@ $(document).ready(function() {
   // set updated at
   dts= $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
   $('#updated').text(dts);
-
-  // set donation address
-  $('.donation_address').text(config.donation_address);
 });
