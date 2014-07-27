@@ -494,30 +494,6 @@ function change_period(period, currency_info) {
         plot(d3.select('#peers'), '', null, data_to_lines(data, function(line){ return line.label == "incoming" }), true);
     });
     
-    d3.json("../web/graph_data/miner_hash_rates/last_" + lowerperiod, function(data) {
-        d3.json("../web/graph_data/miner_dead_hash_rates/last_" + lowerperiod, function(dead_data) {
-            d3.json("../web/graph_data/current_payouts/last_" + lowerperiod, function(current_payouts) {
-                var users = {}; for(var i = 0; i < data.length; ++i) for(var u in data[i][1]) users[u] = null; for(var i = 0; i < dead_data.length; ++i) for(var u in dead_data[i][1]) users[u] = null;
-                var userlist = []; for(var u in users) userlist.push(u);
-                userlist.sort();
-                d3.select("#miners").selectAll("*").remove();
-                var div = d3.select("#miners").selectAll().data(userlist).enter().append("div");
-                div.append("h3").text(function(u) { return u });
-                div.append("svg:svg").each(function(u) {
-                    plot(d3.select(this), "H/s", "H", [
-                        {"data": data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#0000FF", "label": "Total"},
-                        {"data": dead_data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#FF0000", "label": "Dead"}
-                    ]);
-                });
-                div.append("svg:svg").each(function(u) {
-                    plot(d3.select(this), currency_info.symbol, null, [
-                        {"data": current_payouts.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#0000FF"}
-                    ]);
-                });
-            });
-        });
-    });
-    
     d3.json("../web/graph_data/desired_version_rates/last_" + lowerperiod, function(data) {
         plot(d3.select('#desired_version_rates'), 'H/s', 'H', data_to_lines(data, function(line){ return parseInt(line.label) }), true);
     });
