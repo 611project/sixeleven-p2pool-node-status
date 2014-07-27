@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Public Bitcoin P2Pool</title>
+    <title>Public Bitcoin P2Pool - Share</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
@@ -39,9 +39,14 @@
       body {
         font-family: 'Roboto', Helvetica, sans-serif;
         font-size: 13px;
+        margin-top: 10px;
       }
       #myModal .modal-dialog {
         width: 70%;/* your width */
+      }
+      .navbar {
+          min-height: 0;
+          margin: 0;
       }
     </style>
 
@@ -63,9 +68,6 @@
         }
     </style>
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -73,19 +75,8 @@
     <![endif]-->
   </head>
     <body>
-
       <div class='container'>
-        <p class='text-center'>
-          <br/>
-          <a href="http://p2pool.info/index.html">P2Pool</a> |      
-          <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
-          <a href="https://blockchain.info/">Blockchain.info</a> |
-          <a href="https://blockchain.info/pools">Hashrate Distribution</a> |
-          <a href="https://www.landofbitcoin.com/?r=ThOq8vQnJtMTyMOQ">Land of Bitcoin</a>
-        </p>
-      </div>
-
-      <div class='container'>
+        <div class='navbar'></div>
         <p class='text-center'>
           Donate <code class="donation_address"></code>
         </p>
@@ -116,19 +107,18 @@
         <p class='text-center'>
           Donate <code class="donation_address"></code>
         </p>
-      </div>
-      <div class='container'>
-        <p class='text-center'>
-	  <a href="http://p2pool.info/index.html">P2Pool</a> | 
-	  <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
-	  <a href="https://blockchain.info/">Blockchain.info</a> |
-	  <a href="https://blockchain.info/pools">Hashrate Distribution</a> |
-	  <a href="https://www.landofbitcoin.com/?r=ThOq8vQnJtMTyMOQ">Land of Bitcoin</a>
-        </p>
+        <div class='navbar'></div>
       </div>
     </div>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+          $(document).trigger('init');
+          if(config.navbar_url && config.navbar_url.length > 0) {
+            $(".navbar").load(config.navbar_url);
+          }
+        });
+
         // set node name
         if(config.host && config.host.length > 0) {
           api_url= jsonp + '&host=' + encodeURI(config.host) + '&report=';
