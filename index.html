@@ -172,10 +172,43 @@
 
     <div id='footer'></div>
 
+    <audio id="audio-newshare">
+        <source src="audio/newshare.mp3" type="audio/mp3" />
+    </audio>
+
+    <audio id="audio-newblock">
+        <source src="audio/newblock.mp3" type="audio/mp3" />
+    </audio>
+
+    <script type="text/javascript">
+        var newshare;
+        var newblock;
+
+        function playNewShareSound() {
+            if (newshare && newshare.play) {
+                newshare.play();
+            }        
+        }
+
+        function playNewBlockSound() {
+            if (newblock && newblock.play) {
+                newblock.play();
+            }        
+        }
+
+        $(document).ready(function() {
+            newshare = $("#audio-newshare")[0];        
+            newblock = $("#audio-newblock")[0];
+        });
+    </script>
+
     <script type="text/javascript">
     var currency, currency_info, rate, local_stats,
-        global_stats, current_payouts, recent_blocks, recent_shares,
+        global_stats, current_payouts, 
+        recent_blocks, current_block, last_block,
+        recent_shares, current_share, last_share,
         payout_addr;
+
     var local_hashrate= 0, local_doa_hashrate= 0;
 
     // ==================================================================
@@ -377,6 +410,14 @@
       for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
       }
+
+      if (config.enable_audio) {
+          current_block = recent_blocks[0]['share'];
+          if (last_block == null) { last_block = recent_blocks[0]['share']; }
+          if (current_block != last_block) { playNewBlockSound(); }
+          last_block = current_block;
+      }
+
       $.each(recent_blocks, function(key, block) {
         ts= block.ts; num= block.number; hash= block.hash;
 
@@ -400,8 +441,16 @@
       for (var i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
       }
+      
+      if (config.enable_audio) {
+          current_share = recent_shares[0];
+          if (last_share == null) { last_share = recent_shares[0]; }
+          if (current_share != last_share) { playNewShareSound(); }
+          last_share = current_share;
+      }
+      
       $.each(recent_shares, function(key, block) {
-	hash = block;
+        hash = block;
 
         blockinfo= $('<a/>')
           .attr('href', 'share.html#' + hash).text(hash);

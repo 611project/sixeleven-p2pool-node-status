@@ -13,11 +13,12 @@ var config = {
 
   use_fontawesome: true,
   show_github_ribbon: true,
+  enable_audio: true,
 
   // HTML to load at top and bottom of page
-  header_url : ""
-  footer_url : ""
+  header_url : "",
+  footer_url : "",
 
   donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw",
-  node_name: "bitcoin.d4rkn3t.com:9332"
+  node_name : "bitcoin.d4rkn3t.com:9332"
 }
