@@ -278,7 +278,7 @@
     // interested to see, who is mining on my node.
 
     $(document).on('update_miners', function(e, eventInfo) {
-      local_hashrate= 0; local_doa_hashrate= 0;
+      local_hashrate= 0; local_doa_hashrate= 0; local_payout = 0;
       $.each(local_stats.miner_hash_rates, function(address, hashrate) {
         tr= $('<tr/>').attr('id', address);
 
@@ -288,13 +288,7 @@
           tr.addClass('warning');
         }
 
-        // highlight the pool's payout address
-        payout_addr in current_payouts ?
-          $('#payout_now')
-            .text(current_payouts[payout_addr])
-            .append(' ')
-            .append(currency.clone()) :
-          $('#payout_now').html('&dash;');
+        local_payout += current_payouts[payout_addr] || 0;
 
         address_span= $('<span/>').addClass('coin_address').text(address);
         link_icon= $('<i/>').addClass('fa fa-external-link fa-fw');
@@ -334,6 +328,15 @@
         }
         $('#'+address).remove(); $('#active_miners').append(tr);
       });
+
+      if (local_payout !== 0) {
+        $('#payout_now')
+          .text(local_payout)
+          .append(' ')
+          .append(currency.clone());
+      } else {
+        $('#payout_now').html('&dash;');
+      }
 
       if(local_doa_hashrate !== 0 && local_hashrate !== 0) {
         doa_rate= (local_doa_hashrate / local_hashrate) * 100;
