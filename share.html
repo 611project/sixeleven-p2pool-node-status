@@ -1,13 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <title>P2Pool Share</title>
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-        <script type="text/javascript" src="d3.v2.min.js"></script>
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Public Bitcoin P2Pool</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <script type="text/javascript" src="d3.v2.min.js"></script>
+
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-dateFormat.min.js"></script>
+
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+
+    <script src="js/util.js"></script>
+    <script src="js/charts.js"></script>
+
+    <script src="js/config.json"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="grid.css" rel="stylesheet">
+
+    <style type="text/css">
+      body {
+        font-family: 'Roboto', Helvetica, sans-serif;
+        font-size: 13px;
+      }
+      #myModal .modal-dialog {
+        width: 70%;/* your width */
+      }
+    </style>
+
+    <style type="text/css">
+        line {
+            stroke: black;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+        
+        .plotline {
+            stroke-width: 1.4;
+            fill: none;
+        }
+        
+        text {
+            font-family: Sans-serif;
+            font-size: 12px;
+        }
+    </style>
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
     <body>
+
+      <div class='container'>
+        <p class='text-center'>
+          <br/>
+          <a href="http://p2pool.info/index.html">P2Pool</a> |      
+          <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
+          <a href="https://blockchain.info/">Blockchain.info</a> |
+          <a href="https://blockchain.info/pools">Hashrate Distribution</a> |
+          <a href="https://www.landofbitcoin.com/?r=ThOq8vQnJtMTyMOQ">Land of Bitcoin</a>
+        </p>
+      </div>
+
+      <div class='container'>
+        <p class='text-center'>
+          Donate <code class="donation_address"></code>
+        </p>
+      </div>
+
+    <div id="navbar"></div>
+
+    <div class="container">
+      <div class="page-header">
+        <h1 id="page-title"></h1>
+        <b>
+          <small>
+            <span id='_node' class='hidden'>Node: </span>
+            <span id='node' class='hidden'></span><br/>
+            Updated: <span id='updated'></span>
+          </small>
+        </b>
+      </div>
+
+      <div id="share_data">
         <p>Loading...</p>
+      </div>
+    </div> <!-- /container -->
+
+    <div id='footer'>
+      <div class='container'>
+        <hr>
+        <p class='text-center'>
+          Donate <code class="donation_address"></code>
+        </p>
+      </div>
+      <div class='container'>
+        <p class='text-center'>
+	  <a href="http://p2pool.info/index.html">P2Pool</a> | 
+	  <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
+	  <a href="https://blockchain.info/">Blockchain.info</a> |
+	  <a href="https://blockchain.info/pools">Hashrate Distribution</a> |
+	  <a href="https://www.landofbitcoin.com/?r=ThOq8vQnJtMTyMOQ">Land of Bitcoin</a>
+        </p>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+        // set node name
+        if(config.host && config.host.length > 0) {
+          api_url= jsonp + '&host=' + encodeURI(config.host) + '&report=';
+          $('#node').removeClass('hidden').text(config.host);
+          $('#_node').removeClass('hidden');
+        } else if (config.hostname) {
+          $('#node').removeClass('hidden').text(config.hostname);
+          $('#_node').removeClass('hidden');
+        }
+
+        // set updated at
+        dts= $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
+        $('#updated').text(dts);
+        
+        $('.donation_address').text(config.donation_address);
+    </script>
+
         <script type="text/javascript">
             function hex2a(hex) {
                 var str = '';
@@ -26,12 +164,12 @@
                 if(share_hash == current_hash) return;
                 d3.json('../web/share/' + share_hash, function(share) {
                     current_hash = share_hash;
-                    var b = d3.select('body');
+                    var b = d3.select('#share_data');
                     b.selectAll('*').remove();
-                    var h1 = b.append('h1');
-                        h1.append('a').attr('href', '.').text('P2Pool');
-                        h1.append('span').text(' > Share ');
-                        h1.append('a').attr('href', '#' + share_hash).text(share_hash.substr(-8));
+                    var h1 = d3.select('#page-title');
+                        h1.text('');
+                        h1.append('a').attr('href', '.').text('Public Bitcoin P2Pool');
+                        h1.append('span').text(' > Share ' + share_hash.substr(-8));
                     if(share == null) {
                         b.append('p').text('share not found');
                         return;
