@@ -55,12 +55,7 @@
   </head>
 
   <body>
-      <div class='container'>
-        <div class="navbar"></div>
-        <p class='text-center'>
-          Donate <code class="donation_address"></code>
-        </p>
-      </div>
+      <div id="header"></div>
 
     <div class="container">
       <div class="page-header">
@@ -177,21 +172,17 @@
       </table>
     </div> <!-- /container -->
 
-    <div id='footer'>
-      <div class='container'>
-        <hr>
-        <p class='text-center'>
-          Donate <code class="donation_address"></code>
-        </p>
-      </div>
-      <div class="navbar"></div>
-    </div>
+    <div id='footer'></div>
+
     <script type="text/javascript">
 
     $(document).ready(function() {
       $(document).trigger('init');
-      if(config.navbar_url && config.navbar_url.length > 0) {
-        $(".navbar").load(config.navbar_url);
+      if(config.header_url && config.header_url.length > 0) {
+        $("#header").load(config.header_url);
+      }
+      if(config.footer_url && config.footer_url.length > 0) {
+        $("#footer").load(config.footer_url);
       }
     });
 

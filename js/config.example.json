@@ -1,15 +1,23 @@
 var config = {
   myself : [
-    "1MzFr1eKzLEC1tuoZ7URMB7WWBMgHKimKe",
-    "LSRfZJf75MtwzrbAUfQgqzdK4hHpY4oMW3"
+    "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw"
   ],
-  host : "http://localhost:8888",
+
+  host : "http://localhost:9332",
+
   // data reload interval in seconds
   reload_interval : 30,
+
   // chart reload interval in seconds
   reload_chart_interval : 600,
+
   use_fontawesome: true,
-  show_github_ribbon: true
-  // HTML to load at top of page
-  navbar_url : ""
+  show_github_ribbon: true,
+
+  // HTML to load at top and bottom of page
+  header_url : ""
+  footer_url : ""
+
+  donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw",
+  hostname: "bitcoin.d4rkn3t.com:9332"
 }
