@@ -28,6 +28,7 @@
     <script src="js/charts.js"></script>
 
     <script src="js/config.json"></script>
+    <script src="js/init.js"></script>
 
     <!-- Custom styles for this template -->
     <link href="grid.css" rel="stylesheet">
@@ -175,36 +176,10 @@
     <div id='footer'></div>
 
     <script type="text/javascript">
-
-    $(document).ready(function() {
-      $(document).trigger('init');
-      if(config.header_url && config.header_url.length > 0) {
-        $("#header").load(config.header_url);
-      }
-      if(config.footer_url && config.footer_url.length > 0) {
-        $("#footer").load(config.footer_url);
-      }
-    });
-
     var currency, currency_info, rate, local_stats,
         global_stats, current_payouts, recent_blocks, recent_shares,
         payout_addr;
     var local_hashrate= 0, local_doa_hashrate= 0;
-
-    var jsonp= "./jsonp.php?callback=?";
-
-    var api_url= "";
-
-    // Check if we shall remotely connect to a p2pool running somewhere
-
-    if(config.host && config.host.length > 0) {
-      api_url= jsonp + '&host=' + encodeURI(config.host) + '&report=';
-      $('#node').removeClass('hidden').text(config.host);
-      $('#_node').removeClass('hidden');
-    } else if (config.hostname) {
-      $('#node').removeClass('hidden').text(config.hostname);
-      $('#_node').removeClass('hidden');
-    }
 
     // ==================================================================
     // event handlers
