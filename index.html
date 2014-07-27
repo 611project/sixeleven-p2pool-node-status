@@ -36,9 +36,14 @@
       body {
         font-family: 'Roboto', Helvetica, sans-serif;
         font-size: 13px;
+        margin-top: 10px;
       }
       #myModal .modal-dialog {
         width: 70%;/* your width */
+      }
+      .navbar {
+          min-height: 0;
+          margin: 0;
       }
     </style>
 
@@ -54,23 +59,11 @@
 
   <body>
       <div class='container'>
-        <p class='text-center'>
-          <br/>
-          <a href="http://p2pool.info/index.html">P2Pool</a> |      
-          <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
-          <a href="https://blockchain.info/">Blockchain.info</a> |
-          <a href="https://blockchain.info/pools">Hashrate Distribution</a> |
-          <a href="https://www.landofbitcoin.com/?r=ThOq8vQnJtMTyMOQ">Land of Bitcoin</a>
-        </p>
-      </div>
-
-      <div class='container'>
+        <div class="navbar"></div>
         <p class='text-center'>
           Donate <code class="donation_address"></code>
         </p>
       </div>
-
-    <div id="navbar"></div>
 
     <div class="container">
       <div class="page-header">
@@ -194,22 +187,14 @@
           Donate <code class="donation_address"></code>
         </p>
       </div>
-      <div class='container'>
-        <p class='text-center'>
-	  <a href="http://p2pool.info/index.html">P2Pool</a> | 
-	  <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
-	  <a href="https://blockchain.info/">Blockchain.info</a> |
-	  <a href="https://blockchain.info/pools">Hashrate Distribution</a> |
-	  <a href="https://www.landofbitcoin.com/?r=ThOq8vQnJtMTyMOQ">Land of Bitcoin</a>
-        </p>
-      </div>
+      <div class="navbar"></div>
     </div>
     <script type="text/javascript">
 
     $(document).ready(function() {
       $(document).trigger('init');
       if(config.navbar_url && config.navbar_url.length > 0) {
-        $("#navbar").load(config.navbar_url);
+        $(".navbar").load(config.navbar_url);
       }
     });
 
