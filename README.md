@@ -10,7 +10,7 @@ An alternative clean p2pool node dashboard. It uses Bootstrap, jQuery and Highch
 To run this UI in parallel to your current p2pool web interface, do in your web-static directory:
 
 ``` Bash
-git clone https://github.com/johndoe75/p2pool-node-status.git
+git clone https://github.com/jramos/p2pool-node-status.git
 ```
 
 You can then access the UI per `http://<url-to-your-p2pool>:<port>/static/p2pool-node-status/`
@@ -21,7 +21,7 @@ To replace your current web-static, do in the top directory of your p2pool insta
 
 ``` Bash
 mv web-static _web-static-pre
-git clone https://github.com/johndoe75/p2pool-node-status.git web-static
+git clone https://github.com/jramos/p2pool-node-status.git web-static
 ```
 
 and access as usually per `http://<url-to-your-p2pool>:<port>/static`
