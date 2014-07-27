@@ -1,5 +1,6 @@
 var jsonp= "./jsonp.php?callback=?";
 var api_url= "";
+var node_address_link = "";
 
 $(document).ready(function() {
   $(document).trigger('init');
@@ -14,6 +15,12 @@ $(document).ready(function() {
     $('#_node').removeClass('hidden');
   }
 
+  if(config.donation_address && config.donation_address.length > 0) {
+    node_address_link = $('<a/>')
+      .attr('href', 'https://blockchain.info/address/' + config.donation_address)
+      .attr('target', '_blank').text(config.donation_address);
+  }
+
   // load header and footer
   if(config.header_url && config.header_url.length > 0) {
     $("#header").load(config.header_url);
@@ -23,6 +30,6 @@ $(document).ready(function() {
   }
 
   // set updated at
-  dts= $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
+  var dts = $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
   $('#updated').text(dts);
 });
