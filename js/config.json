@@ -7,9 +7,9 @@ var config = {
   // chart reload interval in seconds
   reload_chart_interval : 600,
   use_fontawesome: true,
-  show_github_ribbon: true,
   // HTML to load at top of page
   navbar_url : "",
 
-  donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw"
+  donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw",
+  hostname: "bitcoin.d4rkn3t.com:9332"
 }
