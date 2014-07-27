@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
 
     <title>Public Bitcoin P2Pool</title>
 
@@ -56,7 +55,7 @@
   <body>
       <div class='container'>
         <p class='text-center'>
-	  <br/>
+          <br/>
           <a href="http://p2pool.info/index.html">P2Pool</a> |      
           <a href="https://en.bitcoin.it/wiki/P2Pool">P2Pool Wiki</a> | 
           <a href="https://blockchain.info/">Blockchain.info</a> |
@@ -564,16 +563,6 @@
         });
       });
     };
-
-    // Let the GitHub ribbon fade out and be removed after 5 seconds.
-
-    if(config.show_github_ribbon) {
-      setTimeout(function() {
-        $('#ribbon').fadeOut(1000, function() {
-          this.remove();
-        });
-      }, 5 * 1000);
-    }
 
     // update tables and miner data
 
