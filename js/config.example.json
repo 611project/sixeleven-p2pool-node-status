@@ -19,5 +19,5 @@ var config = {
   footer_url : ""
 
   donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw",
-  hostname: "bitcoin.d4rkn3t.com:9332"
+  node_name: "bitcoin.d4rkn3t.com:9332"
 }

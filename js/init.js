@@ -17,8 +17,8 @@ $(document).ready(function() {
     api_url= jsonp + '&host=' + encodeURI(config.host) + '&report=';
     $('#node').removeClass('hidden').text(config.host);
     $('#_node').removeClass('hidden');
-  } else if (config.hostname) {
-    $('#node').removeClass('hidden').text(config.hostname);
+  } else if (config.node_name) {
+    $('#node').removeClass('hidden').text(config.node_name);
     $('#_node').removeClass('hidden');
   }
 
