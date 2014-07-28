@@ -1,16 +1,10 @@
-var jsonp= "./jsonp.php?callback=?";
-var api_url= "";
 var node_address_link = "";
 
 $(document).ready(function() {
   $(document).trigger('init');
 
   // set node name
-  if(config.host && config.host.length > 0) {
-    api_url= jsonp + '&host=' + encodeURI(config.host) + '&report=';
-    $('#node').removeClass('hidden').text(config.host);
-    $('#_node').removeClass('hidden');
-  } else if (config.node_name) {
+  if (config.node_name) {
     $('#node').removeClass('hidden').text(config.node_name);
     $('#_node').removeClass('hidden');
   }

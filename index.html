@@ -419,7 +419,7 @@
         var confirmations = '&dash;';
 
         try {
-            $.ajax(api_url + '/web/block/' + hash, {
+            $.ajax('/web/block/' + hash, {
                 async: false,
                 success: function(data) {
                     if (data) {
@@ -495,23 +495,23 @@
     // ==================================================================
 
     var fetchdata= function() {
-      $.getJSON(api_url + '/rate', function(data) {
+      $.getJSON('/rate', function(data) {
         if(data) rate= data;
 
-        $.getJSON(api_url + '/web/currency_info', function(data) {
+        $.getJSON('/web/currency_info', function(data) {
           currency_info= data;
           $(document).trigger('update_currency');
 
-          $.getJSON(api_url + '/local_stats', function(data) {
+          $.getJSON('/local_stats', function(data) {
             if(data) local_stats= data;
 
-            $.getJSON(api_url + '/current_payouts', function(data) {
+            $.getJSON('/current_payouts', function(data) {
               if(data) current_payouts= data;
 
-              $.getJSON(api_url + '/payout_addr', function(data) {
+              $.getJSON('/payout_addr', function(data) {
                 if(data) payout_addr= data;
 
-                $.getJSON(api_url + '/global_stats', function(data) {
+                $.getJSON('/global_stats', function(data) {
                   if(data) global_stats= data;
                   $(document).trigger('update_miners');
                   $(document).trigger('update_time');
@@ -524,13 +524,13 @@
     };
 
     var fetchBlocks= function() {
-      $.getJSON(api_url + '/web/currency_info', function(data) {
+      $.getJSON('/web/currency_info', function(data) {
         currency_info= data;
-        $.getJSON(api_url + '/recent_blocks', function(data) {
+        $.getJSON('/recent_blocks', function(data) {
           if(data) recent_blocks= data;
           $(document).trigger('update_blocks');
         });
-        $.getJSON(api_url + '/web/my_share_hashes', function(data) {
+        $.getJSON('/web/my_share_hashes', function(data) {
           if(data) recent_shares= data;
           $(document).trigger('update_shares');
         });
@@ -540,7 +540,7 @@
     var fetchGraph= function(interval) {
       var graph_hashrate= [], graph_doa_hashrate= [];
 
-      $.getJSON(api_url + '/web/graph_data/local_hash_rate/last_' + interval
+      $.getJSON('/web/graph_data/local_hash_rate/last_' + interval
         ,function(data) {
         $.each(data, function(key, value) {
           el= []; el.push(parseInt(value[0]) * 1000,
@@ -548,7 +548,7 @@
           graph_hashrate.push(el);
         });
         graph_hashrate.sort();
-        $.getJSON(api_url + '/web/graph_data/local_dead_hash_rate/last_' + interval
+        $.getJSON('/web/graph_data/local_dead_hash_rate/last_' + interval
           ,function(data) {
           $.each(data, function(key, value) {
             el= []; el.push(parseInt(value[0]) * 1000,
