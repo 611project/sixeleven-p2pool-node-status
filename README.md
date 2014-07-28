@@ -17,28 +17,6 @@ git clone https://github.com/jramos/p2pool-node-status.git web-static
 
 and access via `http://<url-to-your-p2pool>:<port>/static`
 
-### On a different host
-
-This UI can be run on a different web server as well.  The web server must than provide at least PHP in order to execute the JSONP handler.
-
-You need to configure the host and port of your p2pool server in the config.json like
-
-``` JavaScript
-var config = {
-  myself : [],
-  host : "http://p2pool.org:9332",
-  reload_interval : 30,
-  reload_chart_interval : 600,
-  use_fontawesome : true,
-  enable_audio : true,
-  header_url : '',
-  footer_url : '',
-  node_name : ''
-}
-```
-
-**Beware**:  The UI queries the p2pool API periodically.  This will put additional network traffic on your p2pool server.  It can, but must not, result in a higher variance!
-
 ## Configuration
 
 The `config.json` is found in `js` directory.
@@ -50,35 +28,32 @@ If you want your miner address highlighted, adjust `myself` variable accordingly
 ``` JavaScript
 var config = {
   myself : [
-    "1MzFr1eKzLEC1tuoZ7URMB7WWBMgHKimKe",
-    "1MsuC6knLeZKHCyQ39Xcw1qcgScS1ZK5R"
+    "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw"
   ],
-  host : "",
+  node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
   enable_audio : true,
   header_url : '',
-  footer_url : '',
-  node_name : ''
+  footer_url : ''
 }
 ```
 
-### Point the UI to a different p2pool server
+### Customize the node name
 
-You need to configure the host and port of your p2pool server in the `host` variable like
+By default. no node name is displayed. To customize, set `node_name` equal to the value you want to display. Note that this does not affect the host setting in any way.
 
 ``` JavaScript
 var config = {
   myself : [],
-  host : "http://p2pool.org:9332",
+  node_name : 'bitcoin.d4rkn3t.com:9332',
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
   enable_audio : true,
   header_url : '',
-  footer_url : '',
-  node_name : ''
+  footer_url : ''
 }
 ```
 
@@ -89,14 +64,13 @@ Per default the UI updates the miner list and server stats every 30 seconds.  Yo
 ``` JavaScript
 var config = {
   myself : [],
-  host : "",
+  node_name : '',
   reload_interval : 20,
   reload_chart_interval : 1200,
   use_fontawesome : true,
   enable_audio : true,
   header_url : '',
-  footer_url : '',
-  node_name : ''
+  footer_url : ''
 }
 ```
 
@@ -113,14 +87,13 @@ On Bitcoin p2pools, this UI uses the Fontawesome Bitcoin icon per default.  This
 ``` JavaScript
 var config = {
   myself : [],
-  host : "",
+  node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : false,
   enable_audio : true,
   header_url : '',
-  footer_url : '',
-  node_name : ''
+  footer_url : ''
 }
 ```
 
@@ -135,14 +108,13 @@ By default, audio is played when new shares or blocks are discovered. This can b
 ``` JavaScript
 var config = {
   myself : [],
-  host : "",
+  node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
   enable_audio : false,
   header_url : '',
-  footer_url : '',
-  node_name : ''
+  footer_url : ''
 }
 ```
 
@@ -153,44 +125,22 @@ By default, no header or footer are displayed. Add HTML to the files references 
 ``` JavaScript
 var config = {
   myself : [],
-  host : "",
+  node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
   enable_audio : true,
   header_url : 'header.html',
-  footer_url : 'footer.html',
-  node_name : ''
-}
-```
-
-### Customize the node name
-
-By default. no node name is displayed. To customize, set `node_name` equal to the value you want to display. Note that this does not affect the host setting in any way.
-
-``` JavaScript
-var config = {
-  myself : [],
-  host : "",
-  reload_interval : 30,
-  reload_chart_interval : 600,
-  use_fontawesome : true,
-  enable_audio : true,
-  header_url : '',
-  footer_url : '',
-  node_name : 'foo'
+  footer_url : 'footer.html'
 }
 ```
 
 ## Roadmap
 
 - ~~Auto update node graph.~~
-
+- ~~Add section for recent shares and share tree in network~~
+- ~~More graphs for the p2pool node~~
 - Replace HighCharts by another graph lib which can still be used on nodes having a fee (nodes considered as commercial)
-
-- Add section for ~~recent shares and~~ share tree in network
-
-- More graphs for the p2pool node
 
 ## Credits & License
 
@@ -202,7 +152,9 @@ Justin Ramos <justin.ramos@gmail.com>
 
 If you like this tool, find it useful or if you just find it useful, that people out there writing free software for everybody to use or contribute, please donate some coins:
 
-BTC 1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw
+Alexander Zschach, BTC 1MzFr1eKzLEC1tuoZ7URMB7WWBMgHKimKe
+
+Justin Ramos, BTC 1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw
 
 ### License
 
