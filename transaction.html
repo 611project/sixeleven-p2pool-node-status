@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Public Bitcoin P2Pool - Block</title>
+    <title>Public Bitcoin P2Pool - Transaction</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
@@ -86,7 +86,7 @@
         </b>
       </div>
 
-      <div id="block_data">
+      <div id="transaction_data">
         <p>Loading...</p>
       </div>
     </div> <!-- /container -->
@@ -96,46 +96,57 @@
         <script type="text/javascript">
             var current_hash = null;
             function reload(currency_info) {
-                var block_hash = document.location.hash.substr(1);
-                if(block_hash == current_hash) return;
-                d3.json('../web/block/' + block_hash, function(block) {
-                    current_hash = block_hash;
-                    var b = d3.select('#block_data');
+                var transaction_hash = document.location.hash.substr(1);
+                if(transaction_hash == current_hash) return;
+                d3.json('../web/rawtransaction/' + transaction_hash, function(transaction) {
+                    current_hash = transaction_hash;
+                    var b = d3.select('#transaction_data');
                     b.selectAll('*').remove();
                     var h1 = d3.select('#page-title');
                         h1.text('');
                         h1.append('a').attr('href', '.').text('Public Bitcoin P2Pool');
-                        h1.append('span').text(' > Block ' + block_hash.substr(-8));
-                    if (block == null) {
-                        b.append('p').text('block not found');
+                        h1.append('span').text(' > Transaction ' + transaction_hash.substr(-8));
+                    if (transaction == null) {
+                        b.append('p').text('transaction not found');
                         return;
                     }
 
-                    b.append('p').append('span').text('Block: ').append('a').attr('href', '#' + block.hash).text(block.hash);
-                    b.append('p').append('span').text('Time: ' + new Date(1000 * block.time));
-                    b.append('p').append('span').text('Difficulty: ' + block.difficulty);
-                    b.append('p').append('span').text('Height: ' + block.height);
-                    b.append('p').append('span').text('Confirmations: ' + block.confirmations);
+                    b.append('p').append('span').text('Transaction: ').append('a').attr('href', '#' + transaction.txid).text(transaction.txid);
+                    if (transaction.vin[0].coinbase) {
+                        b.append('p').append('span').text('VIN: ' + transaction.vin[0].coinbase);
+                    }
+                    b.append('p').append('span').text('Time: ' + new Date(1000 * transaction.time));
+                    b.append('p').append('span').text('Confirmations: ' + transaction.confirmations);
+                    b.append('p').append('span').text('Block: ').append('a').attr('href', 'block.html#' + transaction.blockhash).text(transaction.blockhash);
+                    b.append('p').append('span').text('Block time: ' + new Date(1000 * transaction.blocktime));
                     
-                    b.append('br');
-
-                    var previous = b.append('p');
-                        previous.append('span').text('Previous Block Hash: ');
-                        previous.append('a').attr('href', '#' + block.previousblockhash).text(block.previousblockhash);
-
-                    var next = b.append('p');
-                        next.append('span').text('Next Block Hash: ');
-                        next.append('a').attr('href', '#' + block.nextblockhash).text(block.nextblockhash);
-
-                    b.append('p').append('span').text('Merkle Root: ' + block.merkleroot);
-                    b.append('p').append('span').text('Nonce: ' + block.nonce);
-
-                    b.append('br');
-
-                    var transactions = b.append('p').append('span').text('Transactions: ').append('ul');
-                    $.each(block.tx, function(index, value) {
-                        transactions.append('li').append('a').attr('href', 'transaction.html#' + value).text(value);
+                    var transaction_total = 0;
+                    var transaction_count = 0;
+                    $.each(transaction.vout, function(index, vout) {
+                        transaction_count += 1;
+                        transaction_total += vout.value;
                     });
+
+                    b.append('p').append('b').text('Block value: ' + transaction_total);
+                    b.append('p').text('Avg/trans: ' + (transaction_total / transaction_count));
+
+                    b.append('br');
+
+                    var address_table = b.append('table');
+                    var row = address_table.append('tr');
+                    row.append('th').text('Address');
+                    row.append('th').text('Value');
+
+                    $.each(transaction.vout, function(index, vout) {
+                        if (vout.value <= 0) { 
+                            return; 
+                        }
+
+                        var tr = address_table.append('tr');
+                        tr.append('td').append('a').attr('href', currency_info.address_explorer_url_prefix + vout.scriptPubKey.addresses).text(vout.scriptPubKey.addresses);
+                        tr.append('td').text(vout.value);
+                    });
+
                     return true;
                 });
             }
