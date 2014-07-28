@@ -3,7 +3,9 @@ p2pool-node-status
 
 An alternative clean p2pool node dashboard. It uses Bootstrap, jQuery and Highcharts. 
 
-[Demo here](http://bitcoin.d4rkn3t.com:9332/static/).
+![Screenshot](img/screenshot.png)
+
+### [Full demo here](http://bitcoin.d4rkn3t.com:9332/static/)
 
 # Note
 
