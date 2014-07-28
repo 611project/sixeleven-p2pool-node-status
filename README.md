@@ -3,6 +3,10 @@ p2pool-node-status
 
 An alternative clean p2pool node dashboard. It uses Bootstrap, jQuery and Highcharts. [Demo here](http://bitcoin.d4rkn3t.com:9332/static/).
 
+# Note
+
+This dashboard requires the use of a custom p2pool fork (https://github.com/jramos/p2pool). The fork adds additional web interfaces for retrieving block data so that confirmation totals can be populated.
+
 ## Installation
 
 ### Parallel to the default web-static

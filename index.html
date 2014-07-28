@@ -159,7 +159,7 @@
           <th>Date/Time</th>
           <th>Number</th>
           <th>Hash</th>
-          <th>Confirmations</th>
+          <th class="text-center">Confirmations</th>
         </tr>
       </table>
     </div> <!-- /container -->
@@ -418,12 +418,28 @@
           .attr('href', currency_info.block_explorer_url_prefix + hash)
           .attr('target', '_blank').text(hash);
 
+        // synchronously lookup confirmations for the block
+        var confirmations = '&dash;';
+
+        try {
+            $.ajax(api_url + '/web/block/' + hash, {
+                async: false,
+                success: function(data) {
+                    if (data) {
+                        confirmations = data['confirmations'];
+                    }
+                }
+            });
+        } catch(error) {
+            // do nothing -- use default of &dash
+        }
+
         tr= $('<tr/>').attr('id', num);
         tr.append($('<td/>')
           .append($.format.prettyDate(new Date(ts * 1000))));
         tr.append($('<td/>').append(num));
         tr.append($('<td/>').append(blockinfo));
-        tr.append($('<td/>').html('&dash;'));
+        tr.append($('<td/>').addClass('text-center').html(confirmations));
         $('#'+num).remove(); $('#recent_blocks').append(tr);
       });
     });
