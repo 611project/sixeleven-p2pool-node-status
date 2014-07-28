@@ -61,7 +61,8 @@ var config = {
   host : "",
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true
+  use_fontawesome : true,
+  enable_audio: true
 }
 ```
 
@@ -76,7 +77,8 @@ var config = {
   host : "http://p2pool.org:9332",
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true
+  use_fontawesome : true,
+  enable_audio: true
 }
 ```
 
@@ -90,7 +92,8 @@ var config = {
   host : "",
   reload_interval : 20,
   reload_chart_interval : 1200,
-  use_fontawesome : true
+  use_fontawesome : true,
+  enable_audio: true
 }
 ```
 
@@ -110,13 +113,29 @@ var config = {
   host : "",
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : false
+  use_fontawesome : false,
+  enable_audio: true
 }
 ```
 
 If this variable is set to `false`, the UI displays the p2pool currency symbol (BTC).
 
 *This does only apply to Bitcoin pools.  On other cryptocurrencies, the UI displays whatever p2pool API replies as currency symbol.*
+
+### Disable audio notifications
+
+By default, audio is played when new shares or blocks are discovered. This can be disabled via the `enable_audio` configuration option. Set it to false if you don't want to hear audio notifications.
+
+``` JavaScript
+var config = {
+  myself : [],
+  host : "",
+  reload_interval : 30,
+  reload_chart_interval : 600,
+  use_fontawesome : false,
+  enable_audio: false
+}
+```
 
 ## Roadmap
 
