@@ -40,7 +40,7 @@ var config = {
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -67,7 +67,7 @@ var config = {
   enable_audio : true,
   header_url : '',
   footer_url : '',
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -85,7 +85,7 @@ var config = {
   enable_audio : true,
   header_url : '',
   footer_url : '',
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -103,7 +103,7 @@ var config = {
   enable_audio : true,
   header_url : '',
   footer_url : '',
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -127,7 +127,7 @@ var config = {
   enable_audio : true,
   header_url : '',
   footer_url : '',
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -149,7 +149,7 @@ var config = {
   enable_audio : false,
   header_url : '',
   footer_url : '',
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -167,7 +167,7 @@ var config = {
   enable_audio : true,
   header_url : 'header.html',
   footer_url : 'footer.html',
-  node_name' : ''
+  node_name : ''
 }
 ```
 
@@ -185,7 +185,7 @@ var config = {
   enable_audio : true,
   header_url : '',
   footer_url : '',
-  node_name' : 'foo'
+  node_name : 'foo'
 }
 ```
 
