@@ -40,6 +40,9 @@ var config = {
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
+  enable_audio : true,
+  header_url : '',
+  footer_url : '',
   node_name : ''
 }
 ```
