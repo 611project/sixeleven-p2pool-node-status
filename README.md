@@ -1,7 +1,7 @@
 p2pool-node-status
 ==================
 
-An alternative clean p2pool node dashboard. It uses Bootstrap, jQuery and Highcharts. 
+A clean p2pool node dashboard. It uses Bootstrap, jQuery and Highcharts. 
 
 ![Screenshot](img/screenshot.png)
 
