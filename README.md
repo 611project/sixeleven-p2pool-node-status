@@ -9,27 +9,13 @@ This dashboard requires the use of a custom p2pool fork (https://github.com/jram
 
 ## Installation
 
-### Parallel to the default web-static
-
-To run this UI in parallel to your current p2pool web interface, do in your web-static directory:
+Do this in the top directory of your p2pool installation:
 
 ``` Bash
-cd web-static
-git clone https://github.com/jramos/p2pool-node-status.git
-```
-
-You can then access the UI per `http://<url-to-your-p2pool>:<port>/static/p2pool-node-status/`
-
-### As web-static replacement
-
-To replace your current web-static, do in the top directory of your p2pool installation
-
-``` Bash
-mv web-static _web-static-pre
 git clone https://github.com/jramos/p2pool-node-status.git web-static
 ```
 
-and access as usually per `http://<url-to-your-p2pool>:<port>/static`
+and access via `http://<url-to-your-p2pool>:<port>/static`
 
 ### On a different host
 
