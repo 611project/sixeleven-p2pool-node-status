@@ -137,13 +137,13 @@
 
       <h4>Active miners on this node</h4>
       <table id='active_miners' class="table table-hover">
-        <tr>
+        <thead>
           <th width='50%' class='text-left'>Bitcoin Address</th>
           <th width='12%' class='text-right'>Hashrate</th>
           <th width='12%' class='text-right'>DOA Hashrate</th>
           <th width='12%' class='text-right'>DOA %</th>
           <th width='14%' class='text-right'>Predicted payout</th>
-        </tr>
+        </thead>
       </table>
 
       <h4>Pool Shares</h4>
@@ -299,7 +299,23 @@
           tr.append($('<td/>').attr('class', 'text-right')
             .append($('<i/>').append('no shares yet')));
         }
-        $('#'+address).remove(); $('#active_miners').append(tr);
+        $('#'+address).remove(); 
+        $('#active_miners').append(tr);
+      });
+
+      var rows = $('#active_miners tbody tr').get();
+
+      rows.sort(function(a, b) {
+          var A = $(a).children('td').eq(4).text();
+          var B = $(b).children('td').eq(4).text();
+
+          if(A > B) { return -1; }
+          if(A < B) { return 1;  }
+          return 0;
+      });
+
+      $.each(rows, function(index, row) {
+        $('#active_miners').children('tbody').append(row);
       });
 
       if (local_payout !== 0) {
