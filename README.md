@@ -10,6 +10,7 @@ An alternative clean p2pool node dashboard. It uses Bootstrap, jQuery and Highch
 To run this UI in parallel to your current p2pool web interface, do in your web-static directory:
 
 ``` Bash
+cd web-static
 git clone https://github.com/jramos/p2pool-node-status.git
 ```
 
@@ -38,7 +39,8 @@ var config = {
   host : "http://p2pool.org:9332",
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true
+  use_fontawesome : true,
+  node_name' : ''
 }
 ```
 
@@ -62,12 +64,14 @@ var config = {
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
-  enable_audio: true
+  enable_audio : true,
+  header_url : '',
+  footer_url : '',
+  node_name' : ''
 }
 ```
 
 ### Point the UI to a different p2pool server
-
 
 You need to configure the host and port of your p2pool server in the `host` variable like
 
@@ -78,7 +82,10 @@ var config = {
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : true,
-  enable_audio: true
+  enable_audio : true,
+  header_url : '',
+  footer_url : '',
+  node_name' : ''
 }
 ```
 
@@ -93,7 +100,10 @@ var config = {
   reload_interval : 20,
   reload_chart_interval : 1200,
   use_fontawesome : true,
-  enable_audio: true
+  enable_audio : true,
+  header_url : '',
+  footer_url : '',
+  node_name' : ''
 }
 ```
 
@@ -114,7 +124,10 @@ var config = {
   reload_interval : 30,
   reload_chart_interval : 600,
   use_fontawesome : false,
-  enable_audio: true
+  enable_audio : true,
+  header_url : '',
+  footer_url : '',
+  node_name' : ''
 }
 ```
 
@@ -132,8 +145,47 @@ var config = {
   host : "",
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : false,
-  enable_audio: false
+  use_fontawesome : true,
+  enable_audio : false,
+  header_url : '',
+  footer_url : '',
+  node_name' : ''
+}
+```
+
+### Display a header and/or footer
+
+By default, no header or footer are displayed. Add HTML to the files references by the `header_url` and/or `footer_url` configuration settings to display an HTML snippet at the top and/or bottom of each page.
+
+``` JavaScript
+var config = {
+  myself : [],
+  host : "",
+  reload_interval : 30,
+  reload_chart_interval : 600,
+  use_fontawesome : true,
+  enable_audio : true,
+  header_url : 'header.html',
+  footer_url : 'footer.html',
+  node_name' : ''
+}
+```
+
+### Customize the node name
+
+By default. no node name is displayed. To customize, set `node_name` equal to the value you want to display. Note that this does not affect the host setting in any way.
+
+``` JavaScript
+var config = {
+  myself : [],
+  host : "",
+  reload_interval : 30,
+  reload_chart_interval : 600,
+  use_fontawesome : true,
+  enable_audio : true,
+  header_url : '',
+  footer_url : '',
+  node_name' : 'foo'
 }
 ```
 
@@ -146,10 +198,6 @@ var config = {
 - Add section for ~~recent shares and~~ share tree in network
 
 - More graphs for the p2pool node
-
-- …
-
-…
 
 ## Credits & License
 
