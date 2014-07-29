@@ -169,6 +169,7 @@
           <th>Hash</th>
           <th>Found by</th>
         </thead>
+        <tbody></tbody>
       </table>
 
       <h4>Recent blocks</h4>
@@ -408,15 +409,16 @@
         table.deleteRow(i);
       }
 
-      if (config.enable_audio) {
-          current_block = recent_blocks[0]['share'];
-          if (last_block == null) { last_block = current_block; }
-          if (current_block != last_block) { 
-            console.log('new block found!');
-            playNewBlockSound(); 
-          }
-          last_block = current_block;
+      current_block = recent_blocks[0]['share'];
+      if (last_block == null) { last_block = current_block; }
+      if (current_block != last_block) {
+        if (config.enable_audio) {
+          playNewBlockSound();
+        } else {
+          console.log('new block found! ' + current_block);
+        }
       }
+      last_block = current_block;
 
       $.each(recent_blocks, function(key, block) {
         ts= block.ts; num= block.number; hash= block.hash;
@@ -455,15 +457,16 @@
         table.deleteRow(i);
       }
       
-      if (config.enable_audio) {
-          current_share = recent_shares[0];
-          if (last_share == null) { last_share = current_share; }
-          if (current_share != last_share) { 
-            console.log('new share found!');
-            playNewShareSound(); 
-          }
-          last_share = current_share;
+      current_share = recent_shares[0];
+      if (last_share == null) { last_share = current_share; }
+      if (current_share != last_share) { 
+        if (config.enable_audio) {
+          playNewShareSound(); 
+        } else {
+          console.log('new share found! ' + current_share)
+        }
       }
+      last_share = current_share;
       
       $.each(recent_shares, function(key, block) {
         hash = block;
@@ -481,6 +484,10 @@
             }
         });
 
+        if (!shareinfo) {
+          return;
+        }
+
         var address_link= $('<a/>')
           .attr('href', 'miner.html#' + shareinfo.payout_address)
           .text(shareinfo.payout_address);
@@ -490,14 +497,14 @@
         tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
         tr.append($('<td/>').append(blockinfo));
         tr.append($('<td/>').append(address_link));
-        $('#recent_shares').append(tr);
+        $('#recent_shares tbody').append(tr);
       });
 
       var rows = $('#recent_shares tbody tr').get();
       rows.sort(function(a, b) {
           // eq(0) gives us column 1 (the hidden timestamp column)
-          var A = $(a).children('td').eq(0).text();
-          var B = $(b).children('td').eq(0).text();
+          var A = parseFloat($(a).children('td').eq(0).text());
+          var B = parseFloat($(b).children('td').eq(0).text());
 
           if(A > B) { return -1; }
           if(A < B) { return 1;  }
