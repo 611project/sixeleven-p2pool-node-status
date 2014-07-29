@@ -3,7 +3,7 @@ p2pool-node-status
 
 A clean p2pool node dashboard. It uses Bootstrap and jQuery.
 
-## Screenshot
+### Screenshot
 
 ![Screenshot](img/screenshot.png)
 
