@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Public Bitcoin P2Pool</title>
+    <title>Public Bitcoin P2Pool Node</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
@@ -77,7 +77,7 @@
 
     <div class="container">
       <div class="page-header">
-        <h1>Public Bitcoin P2Pool</h1>
+        <h1>Public Bitcoin P2Pool Node</h1>
         <b>
           <small>
             <span id='_node' class='hidden'>Node: </span>
@@ -407,7 +407,10 @@
       if (config.enable_audio) {
           current_block = recent_blocks[0]['share'];
           if (last_block == null) { last_block = current_block; }
-          if (current_block != last_block) { playNewBlockSound(); }
+          if (current_block != last_block) { 
+            console.log('new block found!');
+            playNewBlockSound(); 
+          }
           last_block = current_block;
       }
 
@@ -451,7 +454,10 @@
       if (config.enable_audio) {
           current_share = recent_shares[0];
           if (last_share == null) { last_share = current_share; }
-          if (current_share != last_share) { playNewShareSound(); }
+          if (current_share != last_share) { 
+            console.log('new share found!');
+            playNewShareSound(); 
+          }
           last_share = current_share;
       }
       
