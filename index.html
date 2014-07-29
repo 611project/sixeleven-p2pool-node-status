@@ -18,12 +18,11 @@
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
+    <script type="text/javascript" src="d3.v2.min.js"></script>
+
     <script src="js/jquery-2.0.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-dateFormat.min.js"></script>
-
-    <script src="js/highcharts.js"></script>
-    <script src="js/exporting.js"></script>
 
     <script src="js/util.js"></script>
     <script src="js/charts.js"></script>
@@ -43,6 +42,27 @@
       #myModal .modal-dialog {
         width: 70%;/* your width */
       }
+    </style>
+    <style type="text/css">
+        line {
+            stroke: black;
+            stroke-width: 1;
+            shape-rendering: crispEdges;
+        }
+        
+        .plotline {
+            stroke-width: 1.4;
+            fill: none;
+        }
+        
+        text {
+            font-family: Sans-serif;
+            font-size: 12px;
+        }
+        .navbar {
+            min-height: 0;
+            margin: 0;
+        }
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -69,15 +89,9 @@
 
       <div id='node_alerts' class="alert alert-danger hidden"></div>
 
-      <center>
-        <div class='container'>
-          <button id='day' type="button" class="hashrate btn btn-info">Day</button>
-          <button id='week' type="button" class="hashrate btn btn-info">Week</button>
-          <button id='month' type="button" class="hashrate btn btn-info">Month</button>
-          <button id='year' type="button" class="hashrate btn btn-info">Year</button>
-        </div>
-      </center>
-      <div id='chart'></div>
+      <div class='container'>
+        <svg id="local"></svg>
+      </div>
 
       <div style="with: 100%; text-align: right">
           <a href="graphs.html">More graphs &raquo;</a>
@@ -189,11 +203,6 @@
                 newblock.play();
             }        
         }
-
-        $(document).ready(function() {
-            newshare = $("#audio-newshare")[0];        
-            newblock = $("#audio-newblock")[0];
-        });
     </script>
 
     <script type="text/javascript">
@@ -205,36 +214,11 @@
 
     var local_hashrate= 0, local_doa_hashrate= 0;
 
-    // ==================================================================
-    // event handlers
-
-    // toggle hashrate chart
-
-    $('#hour.hashrate').click(function(e) {
-      fetchGraph('hour');
-    });
-    $('#day.hashrate').click(function(e) {
-      fetchGraph('day');
-    });
-    $('#week.hashrate').click(function(e) {
-      fetchGraph('week');
-    });
-    $('#month.hashrate').click(function(e) {
-      fetchGraph('month');
-    });
-    $('#year.hashrate').click(function(e) {
-      fetchGraph('year');
-    });
-
-    // ==================================================================
-    // custom event handlers
-
     // init
-
     $(document).on('init', function(e, eventInfo) {
       fetchdata();
-      fetchBlocks(); /*fetchShares();*/
-      fetchGraph('day'); /*fetchPeers();*/
+      fetchBlocks();
+      fetchGraph('day');
     });
 
     $(document).on('update', function(e, eventInfo) {
@@ -243,14 +227,10 @@
     });
 
     $(document).on('update_graph', function(e, eventInfo) {
-      console.log(chart.title.text);
-      graphPeriod= chart.title.text.match(/\((.+)\)/)[1] || 'day';
-      fetchGraph(graphPeriod);
+      fetchGraph('day');
     });
 
-    // Fills the list of active miners on this node.  I know, there are
-    // zillions of people out there on p2pool.  But I'm typically only
-    // interested to see, who is mining on my node.
+    // Fills the list of active miners on this node.
 
     $(document).on('update_miners', function(e, eventInfo) {
       local_hashrate= 0; local_doa_hashrate= 0; local_payout = 0;
@@ -271,11 +251,11 @@
 
         address_span= $('<span/>').addClass('coin_address').append(address_link);
 
-        doa= local_stats.miner_dead_hash_rates[address] || 0;
-        doa_prop= (parseFloat(doa) / parseFloat(hashrate)) * 100;
+        doa = local_stats.miner_dead_hash_rates[address] || 0;
+        doa_prop = (parseFloat(doa) / parseFloat(hashrate)) * 100;
 
-        local_hashrate+= hashrate || 0;
-        local_doa_hashrate+= doa  || 0;
+        local_hashrate += hashrate || 0;
+        local_doa_hashrate += doa  || 0;
 
         tr.append($('<td/>').addClass('text-left')
           .append(address_span)
@@ -289,7 +269,7 @@
 
         payout= current_payouts[address] || 0;
 
-        if(payout) {
+        if (payout) {
           td= $('<td/>').attr('class', 'text-right')
             .text(parseFloat(payout).toFixed(8))
             .append(' ').append(currency.clone());
@@ -304,8 +284,8 @@
       });
 
       var rows = $('#active_miners tbody tr').get();
-
       rows.sort(function(a, b) {
+          // eq(4) gives us column 5 (the payout column)
           var A = $(a).children('td').eq(4).text();
           var B = $(b).children('td').eq(4).text();
 
@@ -314,6 +294,7 @@
           return 0;
       });
 
+      // replace the rows with the sorted ones
       $.each(rows, function(index, row) {
         $('#active_miners').children('tbody').append(row);
       });
@@ -554,26 +535,8 @@
     }
 
     var fetchGraph= function(interval) {
-      var graph_hashrate= [], graph_doa_hashrate= [];
-
-      $.getJSON('/web/graph_data/local_hash_rate/last_' + interval
-        ,function(data) {
-        $.each(data, function(key, value) {
-          el= []; el.push(parseInt(value[0]) * 1000,
-            parseFloat(value[1]));
-          graph_hashrate.push(el);
-        });
-        graph_hashrate.sort();
-        $.getJSON('/web/graph_data/local_dead_hash_rate/last_' + interval
-          ,function(data) {
-          $.each(data, function(key, value) {
-            el= []; el.push(parseInt(value[0]) * 1000,
-              parseFloat(value[1]));
-            graph_doa_hashrate.push(el);
-          });
-          graph_doa_hashrate.sort();
-          draw(graph_hashrate, graph_doa_hashrate, 'chart', interval);
-        });
+      $.getJSON('/web/currency_info', function(currency_info) {
+        change_period('day', currency_info);
       });
     };
 

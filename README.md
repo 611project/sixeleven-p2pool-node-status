@@ -144,7 +144,7 @@ var config = {
 - ~~Auto update node graph.~~
 - ~~Add section for recent shares and share tree in network~~
 - ~~More graphs for the p2pool node~~
-- Replace HighCharts by another graph lib which can still be used on nodes having a fee (nodes considered as commercial)
+- ~~Replace HighCharts with another graph lib that can still be used on commercial nodes (those with a fee)~~
 
 ## Credits & License
 
