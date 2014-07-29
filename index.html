@@ -163,9 +163,12 @@
 
       <h4>Pool Shares</h4>
       <table id='recent_shares' class="table table-hover">
-        <tr>
-          <th width='100%' class='text-left'>Hash</th>
-        </tr>
+        <thead>
+          <th class="hidden">Timestamp</th>
+          <th>Date/Time</th>
+          <th>Hash</th>
+          <th>Found by</th>
+        </thead>
       </table>
 
       <h4>Recent blocks</h4>
@@ -458,10 +461,42 @@
         blockinfo= $('<a/>')
           .attr('href', 'share.html#' + hash).text(hash);
 
+        var shareinfo;
+        $.ajax('/web/share/' + hash, {
+            async: false,
+            success: function(data) {
+                if (data) {
+                    shareinfo = data['share_data'];
+                }
+            }
+        });
+
+        var address_link= $('<a/>')
+          .attr('href', 'miner.html#' + shareinfo.payout_address)
+          .text(shareinfo.payout_address);
+
         tr= $('<tr/>').attr('id', hash);
-        tr.append($('<td/>')
-          .append(blockinfo));
+        tr.append($('<td class="hidden"/>').text(shareinfo.timestamp));
+        tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
+        tr.append($('<td/>').append(blockinfo));
+        tr.append($('<td/>').append(address_link));
         $('#recent_shares').append(tr);
+      });
+
+      var rows = $('#recent_shares tbody tr').get();
+      rows.sort(function(a, b) {
+          // eq(0) gives us column 1 (the hidden timestamp column)
+          var A = $(a).children('td').eq(0).text();
+          var B = $(b).children('td').eq(0).text();
+
+          if(A < B) { return -1; }
+          if(A > B) { return 1;  }
+          return 0;
+      });
+
+      // replace the rows with the sorted ones
+      $.each(rows, function(index, row) {
+        $('#recent_shares').children('tbody').append(row);
       });
     });
 
