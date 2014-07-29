@@ -3,11 +3,13 @@ p2pool-node-status
 
 A clean p2pool node dashboard. It uses Bootstrap and jQuery.
 
+## Screenshot
+
 ![Screenshot](img/screenshot.png)
 
 ### [Full demo here](http://bitcoin.d4rkn3t.com:9332/static/)
 
-# Note
+## Note
 
 This dashboard requires the use of a custom p2pool fork (https://github.com/jramos/p2pool). The fork adds additional web interfaces for retrieving block and transaction information.
 
