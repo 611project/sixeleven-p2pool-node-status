@@ -168,6 +168,7 @@
           <th>Date/Time</th>
           <th>Hash</th>
           <th>Found by</th>
+          <th class="text-center">State</th>
         </thead>
         <tbody></tbody>
       </table>
@@ -492,11 +493,14 @@
           .attr('href', 'miner.html#' + shareinfo.payout_address)
           .text(shareinfo.payout_address);
 
+        var stale_info = shareinfo.stale_info == null ? 'valid' : shareinfo.stale_info;
+
         tr= $('<tr/>').attr('id', hash);
         tr.append($('<td class="hidden"/>').text(shareinfo.timestamp));
         tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
         tr.append($('<td/>').append(blockinfo));
         tr.append($('<td/>').append(address_link));
+        tr.append($('<td/>').addClass('text-center').html(stale_info));
         $('#recent_shares tbody').append(tr);
       });
 
