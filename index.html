@@ -197,12 +197,16 @@
         var newblock;
 
         function playNewShareSound() {
+            newshare = $("#audio-newshare")[0];
+
             if (newshare && newshare.play) {
                 newshare.play();
             }        
         }
 
         function playNewBlockSound() {
+            newblock = $("#audio-newblock")[0];
+
             if (newblock && newblock.play) {
                 newblock.play();
             }        
