@@ -500,7 +500,7 @@
         tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
         tr.append($('<td/>').append(blockinfo));
         tr.append($('<td/>').append(address_link));
-        tr.append($('<td/>').addClass('text-center').html(stale_info));
+        tr.append($('<td/>').addClass('text-center').text(stale_info));
         $('#recent_shares tbody').append(tr);
       });
 
