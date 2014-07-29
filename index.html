@@ -489,8 +489,8 @@
           var A = $(a).children('td').eq(0).text();
           var B = $(b).children('td').eq(0).text();
 
-          if(A < B) { return -1; }
-          if(A > B) { return 1;  }
+          if(A > B) { return -1; }
+          if(A < B) { return 1;  }
           return 0;
       });
 
