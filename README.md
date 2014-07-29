@@ -1,7 +1,7 @@
 p2pool-node-status
 ==================
 
-A clean p2pool node dashboard. It uses Bootstrap and jQuery.
+A clean p2pool node dashboard. It uses Bootstrap and jQuery. Audio notifications are provided for new shares and blocks (on most modern browsers).
 
 ### Screenshot
 
