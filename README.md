@@ -130,7 +130,7 @@ var config = {
 
 ### Display a header and/or footer
 
-By default, no header or footer are displayed. Add HTML to the files references by the `header_url` and/or `footer_url` configuration settings to display an HTML snippet at the top and/or bottom of each page.
+Add HTML to the files references by the `header_url` and/or `footer_url` configuration settings to display an HTML snippet at the top and/or bottom of each page. Leave blank to disable.
 
 ``` JavaScript
 var config = {
