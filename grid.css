@@ -33,3 +33,11 @@ hr {
 a {
   color: blue;
 }
+
+span.red {
+  color: red;
+}
+
+span.green {
+  color: green;
+}
