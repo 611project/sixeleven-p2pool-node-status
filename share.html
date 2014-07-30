@@ -10,13 +10,9 @@
 
     <title>Public Bitcoin P2Pool Node - Share</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic,500,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <script type="text/javascript" src="d3.v2.min.js"></script>
 
@@ -171,7 +167,6 @@
             
             d3.json('../web/currency_info', function(currency_info) {
                 reload(currency_info);
-                setInterval(function(){ reload(currency_info) }, 100);
             });
         </script>
     </body>

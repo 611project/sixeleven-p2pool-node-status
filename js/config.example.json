@@ -14,7 +14,6 @@ var config = {
   reload_chart_interval : 600,
 
   // misc UI options
-  use_fontawesome: true,
   show_github_ribbon: true,
   enable_audio: true,
 
