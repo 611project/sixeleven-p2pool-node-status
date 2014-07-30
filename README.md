@@ -119,13 +119,13 @@ var config = {
 }
 ```
 
-## License
-
-Code released under [the MIT license](LICENSE.txt).
-
 ## Donate
 
 If you like this tool, find it useful or if you just find it useful, that people out there writing free software for everybody to use or contribute, please donate some bitcoins:
 
 * Alexander Zschach, `1MzFr1eKzLEC1tuoZ7URMB7WWBMgHKimKe`
 * Justin Ramos, `1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw`
+
+## License
+
+Code released under [the MIT license](LICENSE.txt).
