@@ -87,7 +87,7 @@
         </b>
       </div>
 
-      <div id='node_alerts' class="alert alert-danger hidden"></div>
+      <div id='node_alerts' class="alert alert-warning hidden"></div>
 
       <h3>Local Rate</h3>
       <div class='container'>
@@ -377,10 +377,11 @@
         });
       }
       else {
-        if(!$('#node_alerts').hasClass('hidden'))
+        if(!$('#node_alerts').hasClass('hidden')) {
           $('#node_alerts').fadeOut(1000, function() {
-            $(this).addClass('hidden');
+            $(this).attr('style', '').addClass('hidden');
           });
+        }
       }
 
       $('#shares')
@@ -415,9 +416,14 @@
       if (current_block != last_block) {
         if (config.enable_audio) {
           playNewBlockSound();
-        } else {
-          console.log('new block found! ' + current_block);
         }
+
+        var new_block_link = $('<a/>')
+          .attr('href', 'block.html#' + current_block)
+          .text('New block found! ' + current_block)
+        $('#node_alerts').empty();
+        $('#node_alerts').append(new_block_link);
+        $('#node_alerts').removeClass('hidden');         
       }
       last_block = current_block;
 
@@ -463,9 +469,14 @@
       if (current_share != last_share) { 
         if (config.enable_audio) {
           playNewShareSound(); 
-        } else {
-          console.log('new share found! ' + current_share)
         }
+
+        var new_share_link = $('<a/>')
+          .attr('href', 'share.html#' + current_share)
+          .text('New share found! ' + current_share)
+        $('#node_alerts').empty();
+        $('#node_alerts').append(new_share_link);
+        $('#node_alerts').removeClass('hidden'); 
       }
       last_share = current_share;
       
@@ -485,9 +496,7 @@
             }
         });
 
-        if (!shareinfo) {
-          return;
-        }
+        if (!shareinfo) { return; }
 
         var address_link= $('<a/>')
           .attr('href', 'miner.html#' + shareinfo.payout_address)
