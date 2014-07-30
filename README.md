@@ -65,7 +65,7 @@ var config = {
 }
 ```
 
-### Adjust the reload interval
+### Adjust the reload intervals
 
 Per default the UI updates the miner list and server stats every 30 seconds.  You can adjust the `reload_interval` variable like
 
