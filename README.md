@@ -43,7 +43,6 @@ var config = {
   node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true,
   enable_audio : true,
   header_url : '',
   footer_url : ''
@@ -60,7 +59,6 @@ var config = {
   node_name : 'bitcoin.d4rkn3t.com:9332',
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true,
   enable_audio : true,
   header_url : '',
   footer_url : ''
@@ -77,7 +75,6 @@ var config = {
   node_name : '',
   reload_interval : 20,
   reload_chart_interval : 1200,
-  use_fontawesome : true,
   enable_audio : true,
   header_url : '',
   footer_url : ''
@@ -90,27 +87,6 @@ to set it to 20 seconds for example.
 
 **Beware** that each API query puts network and CPU load on your p2pool installation.  Avoid decreasing this value too much.  In my tests, 20 to 30 seconds seem to be fair enough.
 
-### Disable Fontawesome Bitcoin icon
-
-On Bitcoin p2pools, this UI uses the Fontawesome Bitcoin icon per default.  This can be disabled per `use_fontawesome` configuration option.  Set it to false if don't want to use the bitcoin icon.
-
-``` JavaScript
-var config = {
-  myself : [],
-  node_name : '',
-  reload_interval : 30,
-  reload_chart_interval : 600,
-  use_fontawesome : false,
-  enable_audio : true,
-  header_url : '',
-  footer_url : ''
-}
-```
-
-If this variable is set to `false`, the UI displays the p2pool currency symbol (BTC).
-
-*This does only apply to Bitcoin pools.  On other cryptocurrencies, the UI displays whatever p2pool API replies as currency symbol.*
-
 ### Disable audio notifications
 
 By default, audio is played when new shares or blocks are discovered. This can be disabled via the `enable_audio` configuration option. Set it to false if you don't want to hear audio notifications.
@@ -121,7 +97,6 @@ var config = {
   node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true,
   enable_audio : false,
   header_url : '',
   footer_url : ''
@@ -138,7 +113,6 @@ var config = {
   node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
-  use_fontawesome : true,
   enable_audio : true,
   header_url : 'header.html',
   footer_url : 'footer.html'
