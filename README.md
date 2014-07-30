@@ -3,7 +3,7 @@ p2pool-node-status
 
 A clean p2pool node dashboard. It provides:
 
-* Audio notifications for new shares and blocks (on most modern browsers)
+* Audio and text notifications for new shares and blocks (on most modern browsers)
 * Detailed information about each share, block and transaction
 * All the graphs you know and love
 
