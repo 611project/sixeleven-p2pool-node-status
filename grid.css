@@ -41,3 +41,8 @@ span.red {
 span.green {
   color: green;
 }
+
+#miner-summary table td:first-child {
+  font-weight: bold;
+  width: 185px;
+}
