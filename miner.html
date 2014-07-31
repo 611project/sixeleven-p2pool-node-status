@@ -79,6 +79,33 @@
         </b>
       </div>
 
+      <div id="summary">
+        <h3>Summary</h3>
+
+        <table>
+          <tr>
+            <td>Address</td>
+            <td id="address"></td>
+          </tr>
+          <tr>
+            <td>Hashrate</td>
+            <td id="hashrate"></td>
+          </tr>
+          <tr>
+            <td>DOA</td>
+            <td id="doa"></td>
+          </tr>
+          <tr>
+            <td>DOA %</td>
+            <td id="doa_prop"></td>
+          </tr>
+          <tr>
+            <td>Payout</td>
+            <td id="payout"></td>
+          </tr>
+        </table>
+      </div>
+
       <div class="text-center" id="periods">
         <div>
           Periods: <span id="period_chooser"></span>
@@ -100,11 +127,11 @@
         var current_hash = null;
         var miner_hash = document.location.hash.substr(1);
         var currency_info;
+        var local_stats, current_payouts;
 
         var h1 = d3.select('#page-title');
-            h1.text('');
             h1.append('a').attr('href', '.').text('Public Bitcoin P2Pool Node');
-            h1.append('span').text(' > Miner ' + miner_hash);
+            h1.append('span').text(' > Miner ' + miner_hash.substr(0,8));
 
         periods = ["Day", "Week", "Month", "Year"];
         d3.select("#period_chooser").selectAll().data(periods).enter().append("a")
@@ -124,10 +151,44 @@
                 currency_info = currency_info_response;
             });
 
-            load();
+            $.getJSON('/local_stats', function(data) {
+              if(data) {
+                local_stats = data;
+
+                $.getJSON('/current_payouts', function(data) {
+                  if(data) {
+                    current_payouts = data;
+
+                    loadStats();
+                  }
+                });
+              }
+            });
+
+            loadGraphs();
         }
 
-        function load() {
+        function loadStats() {
+          d3.select('#address').text(miner_hash);
+
+          hashrate = local_stats.miner_hash_rates[miner_hash];
+          doa = local_stats.miner_dead_hash_rates[miner_hash] || 0;
+          doa_prop = (parseFloat(doa) / parseFloat(hashrate)) * 100;
+          payout = current_payouts[miner_hash] || 0;
+
+          d3.select('#hashrate').text(formatHashrate(hashrate));
+          d3.select('#doa').text(formatHashrate(doa));
+          d3.select('#doa_prop').text(doa_prop.toFixed(2) + '%');
+
+          if (payout) {
+            d3.select('#payout').text(parseFloat(payout).toFixed(8).toString() + ' ' + currency_info.symbol);
+          }
+          else {
+            d3.select('#payout').text('no shares yet');
+          }
+        }
+
+        function loadGraphs() {
             var lowerperiod = period.toLowerCase();
 
             d3.select("#period_current").text(period);
@@ -138,7 +199,7 @@
                         d3.select("#miner").selectAll("*").remove();
 
                         var div = d3.select("#miner").selectAll().data([miner_hash]).enter().append("div");
-                        div.append('h2').text('Local Rate');
+                        div.append('h3').text('Local Rate');
 
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), "H/s", "H", [
@@ -147,7 +208,7 @@
                             ]);
                         });
 
-                        div.append('h2').text('Payout');
+                        div.append('h3').text('Payout');
 
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), currency_info.symbol, null, [

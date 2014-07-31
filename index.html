@@ -370,13 +370,6 @@
           $(this).removeClass('hidden');
         });
       }
-      else {
-        if(!$('#node_alerts').hasClass('hidden')) {
-          $('#node_alerts').fadeOut(1000, function() {
-            $(this).attr('style', '').addClass('hidden');
-          });
-        }
-      }
 
       $('#shares')
         .text('Total: ' + local_stats.shares.total
@@ -601,9 +594,15 @@
       });
     };
 
-    // update tables and miner data
+    // update tables and miner data, hide any previous alerts
 
     setInterval(function() {
+      if(!$('#node_alerts').hasClass('hidden')) {
+        $('#node_alerts').fadeOut(0, function() {
+          $(this).attr('style', '').addClass('hidden');
+        });
+      }
+
       $(document).trigger('update');
     }, config.reload_interval * 1000);
 
