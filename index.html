@@ -590,7 +590,7 @@
 
     var fetchGraph= function(interval) {
       $.getJSON('/web/currency_info', function(currency_info) {
-        change_period('day', currency_info);
+        change_period('hour', currency_info);
       });
     };
 
