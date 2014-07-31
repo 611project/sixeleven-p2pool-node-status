@@ -46,3 +46,11 @@ span.green {
   font-weight: bold;
   width: 185px;
 }
+
+button.to_usd {
+  border: 0;
+  padding: 8px;
+  color: white;
+  background: #5bb75b;
+  border-radius: 8px;
+}

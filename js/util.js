@@ -30,3 +30,21 @@ String.prototype.formatSeconds = function () {
 }
 
 // ======================================================================
+
+var BTCToUSD = function(bitcoin_amount) {
+  if (dollar_per_bitcoin) {
+    return parseFloat(bitcoin_amount) * dollar_per_bitcoin;
+  }
+}
+
+var getLatestBitcoinPrice = function() {
+  $.ajax('https://api.bitcoinaverage.com/ticker/all', {
+      async: true,
+      cache: true,
+      success: function(ticker) {
+          if (ticker) {
+              dollar_per_bitcoin = parseFloat(ticker['USD']['last']);
+          }
+      }
+  });
+}

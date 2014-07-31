@@ -13,6 +13,9 @@ var config = {
   // chart reload interval in seconds
   reload_chart_interval : 600,
 
+  // allow conversion of bitcoin amounts into USD
+  convert_bitcoin_to_usd: true,
+
   // misc UI options
   show_github_ribbon: true,
   enable_audio: true,

@@ -110,7 +110,7 @@
         </tr>
         <tr>
           <td width='25%'>Current block value:</td>
-          <td width='25%' class='text-right'><span id='block_value'></span></td>
+          <td width='25%' class='text-right'><button class="to_usd"><span id='block_value' data-value=''></span></button></td>
           <td width='25%'>Expected time to share:</td>
           <td width='25%' class='text-right'><span id='expected_time_to_share'></span></td>
         </tr>
@@ -340,8 +340,8 @@
         .text(parseFloat(global_stats.min_difficulty).toFixed(2));
 
       $('#block_value')
-        .text(parseFloat(local_stats.block_value).toFixed(8))
-        .append(' ').append(currency.clone());
+        .attr('data-value', parseFloat(local_stats.block_value).toString())
+        .text(parseFloat(local_stats.block_value).toFixed(8).toString() + ' ' + currency_info.symbol);
 
       $('#efficiency')
 	    .text(parseFloat(local_stats.efficiency * 100).toFixed(2) + '%');

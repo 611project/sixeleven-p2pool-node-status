@@ -24,6 +24,18 @@ $(document).ready(function() {
       .attr('target', '_blank').text(config.donation_address);
   }
 
+  // get the latest bitcoin price
+  var dollar_per_bitcoin;
+  if (config.convert_bitcoin_to_usd) {
+    getLatestBitcoinPrice();
+
+    $('button.to_usd #block_value').bind('click', function(event){
+      bitcoin_amount = parseFloat(event.target.attributes['data-value'].value);
+      bitcoin_in_usd = BTCToUSD(bitcoin_amount).toFixed(2);
+      event.target.innerHTML = '$' + bitcoin_in_usd + ' USD';
+    });
+  }
+
   // set updated at
   var dts = $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
   $('#updated').text(dts);
