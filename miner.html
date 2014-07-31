@@ -79,11 +79,17 @@
         </b>
       </div>
 
-      <p>Periods: <span id="period_chooser"></span> Current: <span id="period_current"></span></p>
-        
-      <div id="warnings"></div>
+      <div class="text-center" id="periods">
+        <div>
+          Periods: <span id="period_chooser"></span>
+        </div>
 
-      <div id="miners">
+        <div>
+          Current: <span id="period_current"></span>
+        </div>
+      </div>
+        
+      <div id="miner">
         <p>Loading...</p>
       </div>
     </div> <!-- /container -->
@@ -98,13 +104,13 @@
         var h1 = d3.select('#page-title');
             h1.text('');
             h1.append('a').attr('href', '.').text('Public Bitcoin P2Pool Node');
-            h1.append('span').text(' > ' + miner_hash);
+            h1.append('span').text(' > Miner ' + miner_hash);
 
         periods = ["Day", "Week", "Month", "Year"];
         d3.select("#period_chooser").selectAll().data(periods).enter().append("a")
             .text(function(period) { return period })
             .attr('href', function(period){ return "?" + period + "#" + miner_hash})
-            .attr("style", function(d, i) { return (i == 0 ? "" : "margin-left:.4em;") + "color:blue;text-decoration:underline;cursor:pointer" });
+            .attr("style", function(d, i) { return (i == 0 ? "" : "margin-left:.4em;")});
 
         var period = window.location.search.substr(1);
 
@@ -129,23 +135,19 @@
             d3.json("../web/graph_data/miner_hash_rates/last_" + lowerperiod, function(data) {
                 d3.json("../web/graph_data/miner_dead_hash_rates/last_" + lowerperiod, function(dead_data) {
                     d3.json("../web/graph_data/current_payouts/last_" + lowerperiod, function(current_payouts) {
-                        d3.select("#miners").selectAll("*").remove();
+                        d3.select("#miner").selectAll("*").remove();
 
-                        var div = d3.select("#miners").selectAll().data([miner_hash]).enter().append("div");
-                        div.append('h3').text(miner_hash);
+                        var div = d3.select("#miner").selectAll().data([miner_hash]).enter().append("div");
+                        div.append('h2').text('Local Rate');
 
-                        var blockinfo= $('<a/>')
-                          .attr('href', currency_info.address_explorer_url_prefix + miner_hash)
-                          .attr('target', '_blank');
-
-                        //div.append(blockinfo);
-                        
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), "H/s", "H", [
                                 {"data": data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#0000FF", "label": "Total"},
                                 {"data": dead_data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#FF0000", "label": "Dead"}
                             ]);
                         });
+
+                        div.append('h2').text('Payout');
 
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), currency_info.symbol, null, [
