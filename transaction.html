@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Public Bitcoin P2Pool Node - Transaction</title>
+    <title>P2Pool Node Status - Transaction</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -97,7 +97,7 @@
                     b.selectAll('*').remove();
                     var h1 = d3.select('#page-title');
                         h1.text('');
-                        h1.append('a').attr('href', '.').text('Public Bitcoin P2Pool Node');
+                        h1.append('a').attr('href', '.').text('P2Pool Node Status');
                         h1.append('span').text(' > Transaction ' + transaction_hash.substr(-8));
                     if (transaction == null) {
                         b.append('p').text('transaction not found');
