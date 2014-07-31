@@ -4,6 +4,7 @@ p2pool-node-status
 A clean p2pool node dashboard. It provides:
 
 * Audio and text notifications for new shares and blocks (on most modern browsers)
+* Automatic conversion of BTC to USD
 * Detailed information about each share, block and transaction
 * All the graphs you know and love
 
@@ -43,6 +44,7 @@ var config = {
   node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
+  convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : '',
   footer_url : ''
@@ -59,6 +61,7 @@ var config = {
   node_name : 'bitcoin.ramosresearch.com:9332',
   reload_interval : 30,
   reload_chart_interval : 600,
+  convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : '',
   footer_url : ''
@@ -67,7 +70,7 @@ var config = {
 
 ### Adjust the reload intervals
 
-Per default the UI updates the miner list and server stats every 30 seconds.  You can adjust the `reload_interval` variable like
+By default the UI updates the miner list and server stats every 30 seconds.  You can adjust the `reload_interval` variable like
 
 ``` JavaScript
 var config = {
@@ -75,6 +78,7 @@ var config = {
   node_name : '',
   reload_interval : 20,
   reload_chart_interval : 1200,
+  convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : '',
   footer_url : ''
@@ -87,6 +91,23 @@ to set it to 20 seconds for example.
 
 **Beware** that each API query puts network and CPU load on your p2pool installation.  Avoid decreasing this value too much.  In my tests, 20 to 30 seconds seem to be fair enough.
 
+### Bitcoin currency conversion
+
+By default, Bitcoin values are automatically converted to US dollars. This is accomplished by using real-time data from [BitcoinAverage](https://api.bitcoinaverage.com/ticker/all). To disable this feature, set the value of `convert_bitcoin_to_usd` to `false`.
+
+``` JavaScript
+var config = {
+  myself : [],
+  node_name : '',
+  reload_interval : 30,
+  reload_chart_interval : 600,
+  convert_bitcoin_to_usd: false,
+  enable_audio : false,
+  header_url : '',
+  footer_url : ''
+}
+```
+
 ### Disable audio notifications
 
 By default, audio is played when new shares or blocks are discovered. This can be disabled via the `enable_audio` configuration option. Set it to false if you don't want to hear audio notifications.
@@ -97,6 +118,7 @@ var config = {
   node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
+  convert_bitcoin_to_usd: true,
   enable_audio : false,
   header_url : '',
   footer_url : ''
@@ -113,6 +135,7 @@ var config = {
   node_name : '',
   reload_interval : 30,
   reload_chart_interval : 600,
+  convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : 'header.html',
   footer_url : 'footer.html'
