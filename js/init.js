@@ -28,19 +28,9 @@ $(document).ready(function() {
   var dollar_per_bitcoin;
   if (config.convert_bitcoin_to_usd) {
     getLatestBitcoinPrice();
-
-    $('button.to_usd').bind('click', function(event){
-      if (this.className == 'to_btc') {
-        bitcoin_amount = parseFloat(this.firstChild.dataset['value']);
-        this.firstChild.innerHTML = bitcoin_amount + ' BTC';
-        this.className = 'to_usd';
-      } else {
-        bitcoin_amount = parseFloat(this.firstChild.dataset['value']);
-        bitcoin_in_usd = BTCToUSD(bitcoin_amount);
-        this.firstChild.innerHTML = '$' + bitcoin_in_usd.toFixed(2) + ' USD';
-        this.className = 'to_btc';
-      }
-    });
+    bindCurrencyConversionButtons();
+  } else {
+    $('button.to_usd').attr('disabled', true);
   }
 
   // set updated at
