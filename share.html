@@ -155,8 +155,12 @@
                     b.append('p').text('Hash: ').append('a').text(share.block.gentx.hash).attr('href', currency_info.tx_explorer_url_prefix+share.block.gentx.hash);
                     b.append('p').text('Coinbase (hex): ' + share.block.gentx.coinbase);
                     b.append('p').text('Coinbase (text): ' + hex2a(share.block.gentx.coinbase));
-                    b.append('p').text('Value: ' + share.block.gentx.value + ' ' + currency_info.symbol);
+
+                    value = share.block.gentx.value;
+                    b.append('p').html('Value: <button class="to_usd"><span data-value="'+value+'">' + value + ' ' + currency_info.symbol + '</span></button>');
                     b.append('p').text('Last txout nonce (used by Stratum miners): ' + share.block.gentx.last_txout_nonce);
+
+                    bindCurrencyConversionButtons();
                     return true;
                 });
             }

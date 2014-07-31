@@ -120,8 +120,10 @@
                         transaction_total += vout.value;
                     });
 
-                    b.append('p').append('b').text('Block value: ' + transaction_total);
-                    b.append('p').text('Avg/trans: ' + (transaction_total / transaction_count));
+                    b.append('p').html('Block value: ' + '<button class="to_usd"><span data-value="'+transaction_total+'">' + transaction_total + ' ' + currency_info.symbol + '</span></button>');
+
+                    average = (transaction_total / transaction_count).toFixed(8);
+                    b.append('p').html('Avg/trans: ' + '<button class="to_usd"><span data-value="'+average+'">' + average + ' ' + currency_info.symbol + '</span></button>');
 
                     b.append('br');
 
@@ -137,9 +139,11 @@
 
                         var tr = address_table.append('tr');
                         tr.append('td').append('a').attr('href', currency_info.address_explorer_url_prefix + vout.scriptPubKey.addresses).text(vout.scriptPubKey.addresses);
-                        tr.append('td').text(vout.value);
+
+                        tr.append('td').html('<button class="to_usd"><span data-value="'+vout.value+'">' + vout.value + ' ' + currency_info.symbol + '</span></button>');
                     });
 
+                    bindCurrencyConversionButtons();
                     return true;
                 });
             }
