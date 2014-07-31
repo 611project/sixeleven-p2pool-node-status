@@ -29,10 +29,17 @@ $(document).ready(function() {
   if (config.convert_bitcoin_to_usd) {
     getLatestBitcoinPrice();
 
-    $('button.to_usd #block_value').bind('click', function(event){
-      bitcoin_amount = parseFloat(event.target.attributes['data-value'].value);
-      bitcoin_in_usd = BTCToUSD(bitcoin_amount).toFixed(2);
-      event.target.innerHTML = '$' + bitcoin_in_usd + ' USD';
+    $('button.to_usd').bind('click', function(event){
+      if (this.className == 'to_btc') {
+        bitcoin_amount = parseFloat(this.firstChild.dataset['value']);
+        this.firstChild.innerHTML = bitcoin_amount + ' BTC';
+        this.className = 'to_usd';
+      } else {
+        bitcoin_amount = parseFloat(this.firstChild.dataset['value']);
+        bitcoin_in_usd = BTCToUSD(bitcoin_amount);
+        this.firstChild.innerHTML = '$' + bitcoin_in_usd.toFixed(2) + ' USD';
+        this.className = 'to_btc';
+      }
     });
   }
 

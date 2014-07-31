@@ -47,9 +47,10 @@ span.green {
   width: 185px;
 }
 
-button.to_usd {
+button.to_usd,
+button.to_btc {
   border: 0;
-  padding: 8px;
+  padding: 2px 8px;
   color: white;
   background: #5bb75b;
   border-radius: 8px;
