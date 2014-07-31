@@ -144,7 +144,7 @@ var config = {
 
 ## Donate
 
-If you like this tool, find it useful or if you just find it useful, that people out there writing free software for everybody to use or contribute, please donate some bitcoins:
+If you find this dashboard useful, please consider donating some bitcoins:
 
 * Alexander Zschach, `1MzFr1eKzLEC1tuoZ7URMB7WWBMgHKimKe`
 * Justin Ramos, `1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw`
