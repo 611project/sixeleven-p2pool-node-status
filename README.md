@@ -11,7 +11,7 @@ A clean p2pool node dashboard. It provides:
 
 ![Screenshot](img/screenshot.png)
 
-### [Full demo here](http://bitcoin.d4rkn3t.com:9332/static/)
+### [Full demo here](http://bitcoin.ramosresearch.com)
 
 ## Note
 
@@ -56,7 +56,7 @@ By default. no node name is displayed. To customize, set `node_name` equal to th
 ``` JavaScript
 var config = {
   myself : [],
-  node_name : 'bitcoin.d4rkn3t.com:9332',
+  node_name : 'bitcoin.ramosresearch.com:9332',
   reload_interval : 30,
   reload_chart_interval : 600,
   enable_audio : true,

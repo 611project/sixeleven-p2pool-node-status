@@ -5,7 +5,7 @@ var config = {
   ],
 
   // specify a name for this node
-  node_name : "bitcoin.d4rkn3t.com:9332",
+  node_name : "bitcoin.ramosresearch.com:9332",
 
   // data reload interval in seconds
   reload_interval : 30,
