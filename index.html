@@ -94,7 +94,7 @@
           <a href="graphs.html">More graphs &raquo;</a>
       </div>
 
-      <h4>Status</h4>
+      <h4>Local Status</h4>
       <table id='status' class="table table-hover" border='0'>
         <tr>
           <td width='25%'>Local rate:</td>
@@ -141,6 +141,34 @@
           <td width='25%' class='text-right'><span id='efficiency'></span></td>
           <td width='25%'>Node fee:</td>
           <td width='25%' class='text-right'><span id='node_fee'></span></td>
+        </tr>
+      </table>
+
+      <h4>Bitcoin status</h4>
+      <table id='bitcoind' class="table table-hover">
+        <tr>
+          <td width='25%'>Network rate:</td>
+          <td width='25%' class='text-right'><span id='network_rate'></span></td>
+          <td width='25%'>Blocks:</td>
+          <td width='25%' class='text-right'><span id='blocks'></span></td>
+        </tr>
+        <tr>
+          <td width='25%'>Node connections:</td>
+          <td width='25%' class='text-right'><img title="in" src="img/in.png"> <span id='connections'></span> <img title="out" src="img/out.png"></td>
+          <td width='25%'>Block difficulty:</td>
+          <td width='25%' class='text-right'><span id='block_difficulty'></span></td>
+        </tr>
+        <tr>
+          <td width='25%'>Exchange rate:</td>
+          <td width='25%' class='text-right'><button class="to_usd"><span data-value="1.00000000">1.00000000 BTC</span></td>
+          <td width='25%'>Current block:</td>
+          <td width='25%' class='text-right'><span id='current_block_size'></span> bytes / <span id='current_block_txs'></span> txs</td>
+        </tr>
+        <tr>
+          <td width='25%'>Node bitcoind version:</td>
+          <td width='25%' class='text-right'><span id='bitcoind_version'></span></td>
+          <td width='25%'>Protocol version:</td>
+          <td width='25%' class='text-right'><span id='bitcoind_protocol'></span></td>
         </tr>
       </table>
 
@@ -222,12 +250,14 @@
     $(document).on('init', function(e, eventInfo) {
       fetchdata();
       fetchBlocks();
+      fetchBitcoind();
       fetchGraph('day');
     });
 
     $(document).on('update', function(e, eventInfo) {
       fetchdata();
       fetchBlocks();
+      fetchBitcoind();
     });
 
     $(document).on('update_graph', function(e, eventInfo) {
@@ -551,6 +581,26 @@
       $('#updated').text(dts);
     });
 
+    $(document).on('update_bitcoind', function(e, eventInfo) {
+      $('#network_rate')
+	      .text(formatHashrate(parseFloat(mining_info.networkhashps)));
+      $('#blocks')
+	      .text(mining_info.blocks);
+      $('#connections')
+	      .text(bitcoind_info.connections);
+      $('#block_difficulty')
+	      .text(mining_info.difficulty);
+      $('#current_block_size')
+	      .text(mining_info.currentblocksize);
+      $('#current_block_txs')
+	      .text(mining_info.currentblocktx);
+      $('#bitcoind_version')
+        .text(bitcoind_info.version);
+      $('#bitcoind_protocol')
+        .text(bitcoind_info.protocolversion);
+
+    });
+
     // ==================================================================
 
     var fetchdata= function() {
@@ -592,6 +642,18 @@
         $.getJSON('/web/my_share_hashes', function(data) {
           if(data) recent_shares= data;
           $(document).trigger('update_shares');
+        });
+      });
+    }
+
+    var bitcoind_info, mining_info;
+    var fetchBitcoind = function() {
+      $.getJSON('/bitcoind/getinfo', function(data) {
+        bitcoind_info = data;
+
+        $.getJSON('/bitcoind/getmininginfo', function(data) {
+          mining_info = data;
+          $(document).trigger('update_bitcoind');
         });
       });
     }
