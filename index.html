@@ -431,7 +431,7 @@
         var confirmations = '&dash;';
 
         try {
-            $.ajax('/web/block/' + hash, {
+            $.ajax('/bitcoind/block/' + hash, {
                 async: false,
                 success: function(data) {
                     if (data) {

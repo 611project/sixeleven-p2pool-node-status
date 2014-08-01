@@ -91,7 +91,7 @@
             function reload(currency_info) {
                 var block_hash = document.location.hash.substr(1);
                 if(block_hash == current_hash) return;
-                d3.json('../web/block/' + block_hash, function(block) {
+                d3.json('../bitcoind/block/' + block_hash, function(block) {
                     current_hash = block_hash;
                     var b = d3.select('#block_data');
                     b.selectAll('*').remove();
