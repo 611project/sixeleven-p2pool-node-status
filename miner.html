@@ -89,7 +89,7 @@
       </div>
 
       <div id="miner-summary">
-        <h3>Local Summary</h3>
+        <h3>Summary</h3>
 
         <table width="100%">
           <tr>
@@ -143,6 +143,19 @@
           </tr>
         </table>
       </div>
+
+      <h4>Recent Pool Shares</h4>
+      <table id='recent_shares' class="table table-hover">
+        <thead>
+          <th class="hidden">Timestamp</th>
+          <th>Date/Time</th>
+          <th>Hash</th>
+          <th class="text-center">State</th>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <hr/>
 
       <div class="text-center" id="periods">
         <div>
@@ -206,6 +219,7 @@
             loadGraphs();
             loadQr();
             loadMinerTransactions();
+            loadRecentShares();
         }
 
         function loadStats() {
@@ -287,6 +301,45 @@
                   .attr('data-value', satoshiToBTC(address_balance))
                   .text(parseFloat(satoshiToBTC(address_balance)).toString() + ' BTC');
               });
+            });
+          });
+        }
+
+        function loadRecentShares() {
+          $.getJSON('/web/my_share_hashes', function(data) {
+            recent_shares = data;
+
+            $.each(recent_shares, function(key, share_hash) {
+              var shareinfo;
+              $.ajax('/web/share/' + share_hash, {
+                  async: false,
+                  success: function(data) {
+                      if (data) {
+                          shareinfo = data['share_data'];
+                      }
+                  }
+              });
+
+              if (!shareinfo) { return; }
+
+              if (shareinfo['payout_address'] != miner_hash) {
+                return;
+              } else {
+                var blockinfo= $('<a/>').attr('href', 'share.html#' + share_hash).text(share_hash);
+                var stale_info = $('<span/>');
+                if (shareinfo.stale_info == null) {
+                  stale_info.addClass('green').text('valid');
+                } else {
+                  stale_info.addClass('red').text(shareinfo.stale_info);
+                }
+
+                tr= $('<tr/>').attr('id', share_hash);
+                tr.append($('<td class="hidden"/>').text(shareinfo.timestamp));
+                tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
+                tr.append($('<td/>').append(blockinfo));
+                tr.append($('<td/>').addClass('text-center').append(stale_info));
+                $('#recent_shares tbody').append(tr);
+              }
             });
           });
         }
