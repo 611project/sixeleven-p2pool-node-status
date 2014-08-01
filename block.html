@@ -135,6 +135,7 @@
             
             d3.json('../web/currency_info', function(currency_info) {
                 reload(currency_info);
+                setInterval(function(){ reload(currency_info) }, 100);
             });
         </script>
     </body>

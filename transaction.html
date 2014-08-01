@@ -91,7 +91,7 @@
             function reload(currency_info) {
                 var transaction_hash = document.location.hash.substr(1);
                 if(transaction_hash == current_hash) return;
-                d3.json('../web/rawtransaction/' + transaction_hash, function(transaction) {
+                d3.json('../bitcoind/rawtransaction/' + transaction_hash, function(transaction) {
                     current_hash = transaction_hash;
                     var b = d3.select('#transaction_data');
                     b.selectAll('*').remove();
