@@ -31,6 +31,10 @@ String.prototype.formatSeconds = function () {
 
 // ======================================================================
 
+var satoshiToBTC = function(satoshis) {
+  return parseFloat(satoshis) * 1e-8;
+}
+
 var BTCToUSD = function(bitcoin_amount) {
   if (dollar_per_bitcoin) {
     return parseFloat(bitcoin_amount) * dollar_per_bitcoin;
