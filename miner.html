@@ -56,6 +56,15 @@
             font-family: Sans-serif;
             font-size: 12px;
         }
+
+        #miner-summary table table td:first-child {
+          font-weight: bold;
+          width: 185px;
+        }
+
+        #miner-summary {
+          margin-bottom: 20px;
+        }
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -82,26 +91,41 @@
       <div id="miner-summary">
         <h3>Summary</h3>
 
-        <table>
+        <table width="100%">
           <tr>
-            <td>Address</td>
-            <td id="address"></td>
-          </tr>
-          <tr>
-            <td>Hashrate</td>
-            <td id="hashrate"></td>
-          </tr>
-          <tr>
-            <td>DOA</td>
-            <td id="doa"></td>
-          </tr>
-          <tr>
-            <td>DOA %</td>
-            <td id="doa_prop"></td>
-          </tr>
-          <tr>
-            <td>Predicted Payout</td>
-            <td><button class="to_usd"><span id="payout"></span></button></td>
+            <td width="50%">
+              <table>
+                <tr>
+                  <td>Address</td>
+                  <td id="address"></td>
+                </tr>
+                <tr>
+                  <td>Hashrate</td>
+                  <td id="hashrate"></td>
+                </tr>
+                <tr>
+                  <td>DOA</td>
+                  <td id="doa"></td>
+                </tr>
+                <tr>
+                  <td>DOA %</td>
+                  <td id="doa_prop"></td>
+                </tr>
+                <tr>
+                  <td>Predicted Payout</td>
+                  <td><button class="to_usd"><span id="payout"></span></button></td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table width="100%">
+                <tr>
+                  <td class="text-center">
+                    <img id="blockchain_qr"/>
+                  </td>
+                </tr>
+              </table>
+            </td>
           </tr>
         </table>
       </div>
@@ -166,6 +190,7 @@
             });
 
             loadGraphs();
+            loadQr();
         }
 
         function loadStats() {
@@ -219,6 +244,10 @@
                     });
                 });
             });
+        }
+
+        function loadQr() {
+          $('img#blockchain_qr').attr('src', 'https://blockchain.info/qr?data=' + miner_hash + '&size=200');
         }
     </script>
   </body>

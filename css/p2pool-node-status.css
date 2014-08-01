@@ -42,11 +42,6 @@ span.green {
   color: green;
 }
 
-#miner-summary table td:first-child {
-  font-weight: bold;
-  width: 185px;
-}
-
 button.to_usd,
 button.to_btc {
   border: 0;
