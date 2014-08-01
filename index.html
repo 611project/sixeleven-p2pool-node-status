@@ -445,7 +445,7 @@
 
         var new_block_link = $('<a/>')
           .attr('href', 'block.html#' + current_block)
-          .text('New block found! ' + current_block)
+          .text('New block found! ' + current_block);
         $('#node_alerts').empty();
         $('#node_alerts').append(new_block_link);
         $('#node_alerts').removeClass('hidden');         
@@ -535,6 +535,11 @@
         }
 
         tr= $('<tr/>').attr('id', hash);
+
+        if(config.myself && config.myself.length > 0 && $.inArray(shareinfo.payout_address, config.myself) >= 0) {
+          tr.addClass('warning');
+        }
+
         tr.append($('<td class="hidden"/>').text(shareinfo.timestamp));
         tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
         tr.append($('<td/>').append(blockinfo));
