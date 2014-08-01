@@ -5,6 +5,7 @@ A clean p2pool node dashboard. It provides:
 
 * Audio and text notifications for new shares and blocks (on most modern browsers)
 * Automatic conversion of BTC to USD
+* Integration with [Blockchain.info](https://blockchain.info/) APIs
 * Detailed information about each share, block and transaction
 * All the graphs you know and love
 
