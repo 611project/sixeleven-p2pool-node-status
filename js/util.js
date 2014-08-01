@@ -38,7 +38,7 @@ var BTCToUSD = function(bitcoin_amount) {
 }
 
 var getLatestBitcoinPrice = function() {
-  $.ajax('https://api.bitcoinaverage.com/ticker/all', {
+  $.ajax('https://blockchain.info/ticker?cors=true', {
       async: true,
       cache: true,
       success: function(ticker) {
