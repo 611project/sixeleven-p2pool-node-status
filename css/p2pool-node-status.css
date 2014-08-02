@@ -50,3 +50,8 @@ button.to_btc {
   background: #5bb75b;
   border-radius: 8px;
 }
+
+#updated.updating {
+  font-weight: bold;
+  color: #5bb75b;
+}

@@ -78,7 +78,7 @@
           <small>
             <span id='_node' class='hidden'>Node: </span>
             <span id='node' class='hidden'></span><br/>
-            Updated: <span id='updated'></span>
+            <span id='updated'></span>
           </small>
         </b>
       </div>
@@ -583,7 +583,7 @@
 
     $(document).on('update_time', function(e, eventInfo) {
       dts= $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
-      $('#updated').text(dts);
+      $('#updated').attr('class', '').text('Updated: ' + dts);
     });
 
     $(document).on('update_bitcoind', function(e, eventInfo) {
@@ -678,6 +678,7 @@
         });
       }
 
+      $('#updated').addClass('updating').text('Updating...');
       $(document).trigger('update');
     }, config.reload_interval * 1000);
 

@@ -35,5 +35,5 @@ $(document).ready(function() {
 
   // set updated at
   var dts = $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
-  $('#updated').text(dts);
+  $('#updated').text('Updated: ' + dts);
 });
