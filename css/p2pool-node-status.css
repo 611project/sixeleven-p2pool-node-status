@@ -1,8 +1,23 @@
-.container {
-  padding-left: 15px;
-  padding-right: 15px;
+body {
+  background: #efefef;
+  margin: 0 !important;
+  padding: 0;
 }
 
+.page-header {
+  margin: 20px 0 20px;
+}
+
+.container {
+  padding: 0 20px;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: 0;
+}
+
+#footer {
+  margin-top: 20px;
+}
 h4 {
   margin-top: 25px;
 }
@@ -23,11 +38,6 @@ h4 {
   border: 1px solid #ddd;
   background-color: rgba(86,61,124,.15);
   border: 1px solid rgba(86,61,124,.2);
-}
-
-hr {
-  margin-top: 40px;
-  margin-bottom: 40px;
 }
 
 a {
