@@ -582,6 +582,7 @@
     // Updates the 'Updated:' field in page header
 
     $(document).on('update_time', function(e, eventInfo) {
+      $('title').text('P2Pool Node Status');
       dts= $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
       $('#updated').attr('class', '').text('Updated: ' + dts);
     });
@@ -678,6 +679,7 @@
         });
       }
 
+      $('title').text('Updating...');
       $('#updated').addClass('updating').text('Updating...');
       $(document).trigger('update');
     }, config.reload_interval * 1000);
