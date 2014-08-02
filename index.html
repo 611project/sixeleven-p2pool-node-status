@@ -628,6 +628,11 @@
         .text((block_interval / 60).toFixed(1) + ' min');
       $('#block_eta')
         .text((block_eta / 60).toFixed(1) + ' min');
+
+      if (block_eta < 0) {
+        $('#block_eta').addClass('red bold');
+      }
+
       $('#block_probability')
         .text(parseFloat(block_probability) * 1e9).append('%');
       $('#hashes_to_win')
