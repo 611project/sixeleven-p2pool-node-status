@@ -88,61 +88,64 @@
         </b>
       </div>
 
+      <div id="loading"><span>Loading...</span></div>
+
+      <div id="local_rate_graph"></div>
+
+      <div class="text-center" id="periods">
+        <div>
+          Periods: <span id="period_chooser"></span>
+        </div>
+
+        <div>
+          Current: <span id="period_current"></span>
+        </div>
+      </div>
+
+      <br/>
+
       <div id="miner-summary">
-        <h3>Summary</h3>
+        <h4>Miner Summary</h4>
 
-        <table width="100%">
+        <table class="table table-hover" border='0'>
           <tr>
-            <td width="50%">
-              <table>
-                <tr>
-                  <td>Address</td>
-                  <td id="address"></td>
-                </tr>
-                <tr>
-                  <td>Hashrate</td>
-                  <td id="hashrate"></td>
-                </tr>
-                <tr>
-                  <td>DOA</td>
-                  <td id="doa"></td>
-                </tr>
-                <tr>
-                  <td>DOA %</td>
-                  <td id="doa_prop"></td>
-                </tr>
-                <tr>
-                  <td height="30">Predicted Payout</td>
-                  <td><button class="to_usd"><span id="payout"></span></button></td>
-                </tr>
-              </table>
-
-              <h4>Bitcoin Transactions</h4>
-              <table>
-                <tr>
-                  <td height="30">Total Received</td>
-                  <td><button class="to_usd"><span id="total_received"></span></button></td>
-                </tr>
-                <tr>
-                  <td height="30">Total Sent</td>
-                  <td><button class="to_usd"><span id="total_sent"></span></button></td>
-                </tr>
-                <tr>
-                  <td height="30">Current Balance</td>
-                  <td><button class="to_usd"><span id="current_balance"></span></button></td>
-                </tr>
-              </table>
-            </td>
-            <td>
-              <table width="100%">
-                <tr>
-                  <td class="text-center"><img id="blockchain_qr"/></td>
-                </tr>
-              </table>
-            </td>
+            <td width="25%">Hashrate</td>
+            <td id="hashrate"></td>
+            <td width="25%">Address</td>
+            <td id="address"></td>
+          </tr>
+          <tr>
+            <td width="25%">DOA</td>
+            <td id="doa"></td>
+            <td width="25%">DOA %</td>
+            <td id="doa_prop"></td>
+          </tr>
+          <tr>
+            <td height="30">Predicted Payout</td>
+            <td width="25%"><button class="to_usd"><span id="payout"></span></button></td>
+            <td width="25%"></td>
+            <td width="25%"></td>
           </tr>
         </table>
       </div>
+
+      <div id="payout_graph"></div>
+
+      <h4>Bitcoin Status</h4>
+      <table class="table table-hover" border='0'>
+        <tr>
+          <td height="30">Total Received</td>
+          <td width="25%"><button class="to_usd"><span id="total_received"></span></button></td>
+          <td height="30">Total Sent</td>
+          <td width="25%"><button class="to_usd"><span id="total_sent"></span></button></td>
+        </tr>
+        <tr>
+          <td height="30">Current Balance</td>
+          <td width="25%"><button class="to_usd"><span id="current_balance"></span></button></td>
+          <td width="25%"></td>
+          <td width="25%"></td>
+        </tr>
+      </table>
 
       <h4>Recent Pool Shares</h4>
       <table id='recent_shares' class="table table-hover">
@@ -154,22 +157,6 @@
         </thead>
         <tbody></tbody>
       </table>
-
-      <hr/>
-
-      <div class="text-center" id="periods">
-        <div>
-          Periods: <span id="period_chooser"></span>
-        </div>
-
-        <div>
-          Current: <span id="period_current"></span>
-        </div>
-      </div>
-        
-      <div id="miner">
-        <p>Loading...</p>
-      </div>
     </div> <!-- /container -->
 
     <div id='footer'></div>
@@ -251,11 +238,10 @@
             d3.json("../web/graph_data/miner_hash_rates/last_" + lowerperiod, function(data) {
                 d3.json("../web/graph_data/miner_dead_hash_rates/last_" + lowerperiod, function(dead_data) {
                     d3.json("../web/graph_data/current_payouts/last_" + lowerperiod, function(current_payouts) {
-                        d3.select("#miner").selectAll("*").remove();
+                        d3.select("#loading").selectAll("*").remove();
 
-                        var div = d3.select("#miner").selectAll().data([miner_hash]).enter().append("div");
+                        var div = d3.select('#local_rate_graph').selectAll().data([miner_hash]).enter().append("div");
                         div.append('h3').text('Local Rate');
-
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), "H/s", "H", [
                                 {"data": data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#5bb75b", "label": "Total"},
@@ -263,8 +249,9 @@
                             ]);
                         });
 
-                        div.append('h3').text('Payout');
 
+                        var div = d3.select('#payout_graph').selectAll().data([miner_hash]).enter().append("div");
+                        div.append('h3').text('Payout');
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), currency_info.symbol, null, [
                                 {"data": current_payouts.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#5bb75b"}
