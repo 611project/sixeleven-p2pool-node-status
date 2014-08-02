@@ -3,12 +3,15 @@ var node_address_link = "";
 $(document).ready(function() {
   $(document).trigger('init');
 
-  // load header and footer
+  // load header/footer
   if(config.header_url && config.header_url.length > 0) {
     $("#header").load(config.header_url);
   }
   if(config.footer_url && config.footer_url.length > 0) {
     $("#footer").load(config.footer_url);
+  }
+  if(config.ad_url && config.ad_url.length > 0) {
+    $("#ad").load(config.ad_url);
   }
 
   // set node name

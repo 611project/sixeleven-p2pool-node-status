@@ -8,6 +8,11 @@ body {
   margin: 20px 0 20px;
 }
 
+#ad {
+  float: right;
+}
+
+
 .container {
   padding: 0 20px;
   background: white;

@@ -20,9 +20,10 @@ var config = {
   show_github_ribbon: true,
   enable_audio: true,
 
-  // HTML to load at top and bottom of page
+  // custom HTML to load
   header_url : "header.html",
   footer_url : "footer.html",
+  ad_url :     "ad.html",
 
   // address for donations
   donation_address : "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw"

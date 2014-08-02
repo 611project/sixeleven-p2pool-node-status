@@ -48,7 +48,8 @@ var config = {
   convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : '',
-  footer_url : ''
+  footer_url : '',
+  ad_url     : ''
 }
 ```
 
@@ -65,7 +66,8 @@ var config = {
   convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : '',
-  footer_url : ''
+  footer_url : '',
+  ad_url     : ''
 }
 ```
 
@@ -82,7 +84,8 @@ var config = {
   convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : '',
-  footer_url : ''
+  footer_url : '',
+  ad_url     : ''
 }
 ```
 
@@ -105,7 +108,8 @@ var config = {
   convert_bitcoin_to_usd: false,
   enable_audio : false,
   header_url : '',
-  footer_url : ''
+  footer_url : '',
+  ad_url     : ''
 }
 ```
 
@@ -122,13 +126,14 @@ var config = {
   convert_bitcoin_to_usd: true,
   enable_audio : false,
   header_url : '',
-  footer_url : ''
+  footer_url : '',
+  ad_url     : ''
 }
 ```
 
-### Display a header and/or footer
+### Display a header, footer and ads
 
-Add HTML to the files references by the `header_url` and/or `footer_url` configuration settings to display an HTML snippet at the top and/or bottom of each page. Leave blank to disable.
+Add HTML to the files references by `header_url`, `footer_url` and `ad_url` to display HTML snippets at the top, bottom and top-right of each page. Leave blank to disable.
 
 ``` JavaScript
 var config = {
@@ -139,7 +144,8 @@ var config = {
   convert_bitcoin_to_usd: true,
   enable_audio : true,
   header_url : 'header.html',
-  footer_url : 'footer.html'
+  footer_url : 'footer.html',
+  ad_url     : 'ad.html'
 }
 ```
 
