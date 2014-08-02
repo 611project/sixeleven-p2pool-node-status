@@ -371,7 +371,7 @@ function change_period(period, currency_info) {
     d3.select("#period_current").text(period);
     var lowerperiod = period.toLowerCase();
     plot_later(d3.select("#local"), "H/s", "H", [
-        {"url": "../web/graph_data/local_hash_rate/last_" + lowerperiod, "color": "#0000FF", "label": "Total"},
+        {"url": "../web/graph_data/local_hash_rate/last_" + lowerperiod, "color": "#5bb75b", "label": "Total"},
         {"url": "../web/graph_data/local_dead_hash_rate/last_" + lowerperiod, "color": "#FF0000", "label": "Dead"}
     ]);
     d3.json("../web/graph_data/local_share_hash_rates/last_" + lowerperiod, function(data) {
