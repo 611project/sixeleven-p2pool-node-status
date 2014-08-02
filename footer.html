@@ -14,5 +14,7 @@
 </div>
 
 <script type="text/javascript">
-    $('#donation_address').html(node_address_link);
+if (donation_address) {
+  $('#donation_address').text(donation_address);
+}
 </script>

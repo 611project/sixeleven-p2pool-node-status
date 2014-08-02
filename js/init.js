@@ -1,4 +1,4 @@
-var node_address_link = "";
+var donation_address = "";
 
 $(document).ready(function() {
   $(document).trigger('init');
@@ -22,9 +22,7 @@ $(document).ready(function() {
 
   // create donation address link
   if(config.donation_address && config.donation_address.length > 0) {
-    node_address_link = $('<a/>')
-      .attr('href', 'https://blockchain.info/address/' + config.donation_address)
-      .attr('target', '_blank').text(config.donation_address);
+    donation_address = config.donation_address;
   }
 
   // get the latest bitcoin price
