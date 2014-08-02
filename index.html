@@ -491,7 +491,7 @@
       
       current_share = recent_shares[0];
       if (last_share == null) { last_share = current_share; }
-      if (current_share != last_share) { 
+      if (current_share != last_share && current_share != null) {
         if (config.enable_audio) {
           playNewShareSound(); 
         }
