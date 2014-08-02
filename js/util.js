@@ -10,6 +10,9 @@ var formatHashrate= function(rate) {
   if(rate >= 1000) { rate /= 1000; unit= 'GH/s'; }
   if(rate >= 1000) { rate /= 1000; unit= 'TH/s'; }
   if(rate >= 1000) { rate /= 1000; unit= 'PH/s'; }
+  if(rate >= 1000) { rate /= 1000; unit= 'EH/s'; }
+  if(rate >= 1000) { rate /= 1000; unit= 'ZH/s'; }
+  if(rate >= 1000) { rate /= 1000; unit= 'YH/s'; }
   return (rate.toFixed(2) + ' ' + unit);
 }
 
