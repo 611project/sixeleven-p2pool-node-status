@@ -37,7 +37,7 @@ var satoshiToBTC = function(satoshis) {
 
 var BTCToUSD = function(bitcoin_amount) {
   if (dollar_per_bitcoin) {
-    return parseFloat(bitcoin_amount) * dollar_per_bitcoin;
+    return parseFloat(bitcoin_amount) * parseFloat(dollar_per_bitcoin);
   }
 }
 
@@ -59,7 +59,7 @@ var bindCurrencyConversionButtons = function () {
   $('button.to_usd').on('click', function(event){
     if (this.className == 'to_btc') {
       bitcoin_amount = parseFloat(this.firstChild.dataset['value']);
-      this.firstChild.innerHTML = bitcoin_amount.toFixed(8) + ' BTC';
+      this.firstChild.innerHTML = bitcoin_amount + ' BTC';
       this.className = 'to_usd';
     } else {
       bitcoin_amount = parseFloat(this.firstChild.dataset['value']);

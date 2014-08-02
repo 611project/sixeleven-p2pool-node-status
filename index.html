@@ -153,16 +153,28 @@
           <td width='25%' class='text-right'><span id='blocks'></span></td>
         </tr>
         <tr>
-          <td width='25%'>Node connections:</td>
-          <td width='25%' class='text-right'><span id='connections'></span></td>
+          <td width='25%'>Current block:</td>
+          <td width='25%' class='text-right'><span id='current_block_size'></span> bytes / <span id='current_block_txs'></span> txs</td>
           <td width='25%'>Block difficulty:</td>
           <td width='25%' class='text-right'><span id='block_difficulty'></span></td>
         </tr>
         <tr>
+          <td width='25%'>Hashes to win:</td>
+          <td width='25%' class='text-right'><span id='hashes_to_win'></span></td>
+          <td width='25%'>Block probability per GH:</td>
+          <td width='25%' class='text-right'><span id='block_probability'></span></td>
+        </tr>
+        <tr>
+          <td width='25%'>Total Bitcoins:</td>
+          <td width='25%' class='text-right'><button class="to_usd"><span id='total_bitcoins'></span></button></td>
+          <td width='25%'>Block interval:</td>
+          <td width='25%' class='text-right'><span id='block_interval'></span></td>
+        </tr>
+        <tr>
           <td width='25%'>Exchange rate:</td>
-          <td width='25%' class='text-right'><button class="to_usd"><span data-value="1.00000000">1.00000000 BTC</span></td>
-          <td width='25%'>Current block:</td>
-          <td width='25%' class='text-right'><span id='current_block_size'></span> bytes / <span id='current_block_txs'></span> txs</td>
+          <td width='25%' class='text-right'><button class="to_usd"><span data-value="1">1 BTC</span></td>
+          <td width='25%'>Block ETA:</td>
+          <td width='25%' class='text-right'><span id='block_eta'></span></td>
         </tr>
         <tr>
           <td width='25%'>Node bitcoind version:</td>
@@ -251,6 +263,7 @@
       fetchdata();
       fetchBlocks();
       fetchBitcoind();
+      fetchBlockchainInfo();
       fetchGraph('day');
     });
 
@@ -258,6 +271,7 @@
       fetchdata();
       fetchBlocks();
       fetchBitcoind();
+      fetchBlockchainInfo();
     });
 
     $(document).on('update_graph', function(e, eventInfo) {
@@ -592,8 +606,8 @@
 	      .text(formatHashrate(parseFloat(mining_info.networkhashps)));
       $('#blocks')
 	      .text(mining_info.blocks);
-      $('#connections')
-	      .text(bitcoind_info.connections);
+      $('#bitcoind_uptime')
+        .text(bitcoind_info.uptime);
       $('#block_difficulty')
 	      .text(mining_info.difficulty);
       $('#current_block_size')
@@ -604,7 +618,20 @@
         .text(bitcoind_info.version);
       $('#bitcoind_protocol')
         .text(bitcoind_info.protocolversion);
+    });
 
+    $(document).on('update_blockchain_info', function(e, eventInfo) {
+      $('#total_bitcoins')
+        .attr('data-value', total_bitcoins)
+        .text(total_bitcoins.toString() + ' BTC');
+      $('#block_interval')
+        .text((block_interval / 60).toFixed(1) + ' min');
+      $('#block_eta')
+        .text((block_eta / 60).toFixed(1) + ' min');
+      $('#block_probability')
+        .text(parseFloat(block_probability) * 1e9).append('%');
+      $('#hashes_to_win')
+      .text(formatHashrate(hashes_to_win).replace('/s', ''));
     });
 
     // ==================================================================
@@ -660,6 +687,31 @@
         $.getJSON('/bitcoind/getmininginfo', function(data) {
           mining_info = data;
           $(document).trigger('update_bitcoind');
+        });
+      });
+    }
+
+    var block_probability, hashes_to_win, total_bitcoins, block_interval, block_eta;
+    var fetchBlockchainInfo = function() {
+      $.getJSON('https://blockchain.info/q/probability?cors=true', function(data) {
+        block_probability = parseFloat(data);
+
+        $.getJSON('https://blockchain.info/q/hashestowin?cors=true', function(data) {
+          hashes_to_win = data;
+
+          $.getJSON('https://blockchain.info/q/totalbc?cors=true', function(data) {
+            total_bitcoins = satoshiToBTC(data);
+
+            $.getJSON('https://blockchain.info/q/interval?cors=true', function(data) {
+              block_interval = data;
+
+              $.getJSON('https://blockchain.info/q/eta?cors=true', function(data) {
+                block_eta = data;
+
+                $(document).trigger('update_blockchain_info');
+              });
+            });
+          });
         });
       });
     }
