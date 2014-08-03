@@ -148,7 +148,7 @@
         </tr>
       </table>
 
-      <h4>Recent Pool Shares</h4>
+      <h4>Recent Shares</h4>
       <table id='recent_shares' class="table table-hover">
         <thead>
           <th class="hidden">Timestamp</th>
@@ -223,12 +223,11 @@
           d3.select('#doa_prop').text(doa_prop.toFixed(2) + '%');
 
           if (payout) {
-            $('#payout')
-              .attr('data-value', payout)
-              .text(parseFloat(payout).toFixed(8).toString() + ' ' + currency_info.symbol);
+            $('#payout').attr('data-value', payout);
+            d3.select('#payout').text(parseFloat(payout).toFixed(8).toString() + ' ' + currency_info.symbol);
           }
           else {
-            $('#payout').text('no shares yet');
+            d3.select('#payout').text('no shares yet');
           }
         }
 
