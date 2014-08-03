@@ -92,7 +92,8 @@
       </div>
 
       <div style="width: 100%; text-align: right">
-          <a href="graphs.html">More graphs &raquo;</a>
+        <a href="#" onclick="return updateGraph();">Refresh graph</a> |
+        <a href="graphs.html">More graphs &raquo;</a>
       </div>
 
       <h4>P2Pool Status</h4>
@@ -738,9 +739,16 @@
     var fetchGraph= function(interval) {
       $.getJSON('/web/currency_info', function(currency_info) {
         change_period('hour', currency_info);
+        $(document).trigger('update_time');
       });
     };
 
+    var updateGraph = function() {
+      $('title').text('Updating graph...');
+      $('#updated').addClass('updating').text('Updating graph...');
+
+      $(document).trigger('update_graph');
+    }
     // update tables and miner data, hide any previous alerts
 
     setInterval(function() {
@@ -757,12 +765,7 @@
 
     // update blocks and graph
 
-    setInterval(function() {
-      $('title').text('Updating graph...');
-      $('#updated').addClass('updating').text('Updating graph...');
-
-      $(document).trigger('update_graph');
-    }, config.reload_chart_interval * 1000);
+    setInterval(updateGraph, config.reload_chart_interval * 1000);
     </script>
   </body>
 </html>
