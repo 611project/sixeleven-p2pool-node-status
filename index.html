@@ -186,8 +186,8 @@
         <tr>
           <td width='25%'>Connections:</td>
           <td width='25%' class='text-right'><span id='bitcoind_connections'></span></td>
-          <td width='25%'></td>
-          <td width='25%' class='text-right'></td>
+          <td width='25%'>Relay fee:</td>
+          <td width='25%' class='text-right'><button class="to_usd"><span id='bitcoind_relay_fee'></span></button></td>
         </tr>
       </table>
 
@@ -627,6 +627,9 @@
         .text(bitcoind_info.protocolversion);
       $('#bitcoind_connections')
         .text(bitcoind_info.connections);
+      $('#bitcoind_relay_fee')
+        .attr('data-value', bitcoind_info.relayfee)
+        .text(bitcoind_info.relayfee.toString() + ' BTC');
     });
 
     $(document).on('update_blockchain_info', function(e, eventInfo) {
