@@ -638,12 +638,12 @@
         .attr('data-value', total_bitcoins)
         .text(total_bitcoins.toString() + ' BTC');
       $('#block_interval')
-        .text((block_interval / 60).toFixed(1) + ' min');
+        .text((''+block_interval).formatSeconds());
       $('#block_eta')
-        .text((block_eta / 60).toFixed(1) + ' min');
+        .text((''+Math.abs(block_eta)).formatSeconds());
 
       if (block_eta < 0) {
-        $('#block_eta').addClass('red bold');
+        $('#block_eta').addClass('red bold').text('-' + $('#block_eta').text());
       } else {
         $('#block_eta').attr('class', '');
       }
