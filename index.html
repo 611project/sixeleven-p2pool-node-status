@@ -750,14 +750,17 @@
         });
       }
 
-      $('title').text('Updating...');
-      $('#updated').addClass('updating').text('Updating...');
+      $('title').text('Updating data...');
+      $('#updated').addClass('updating').text('Updating data...');
       $(document).trigger('update');
     }, config.reload_interval * 1000);
 
     // update blocks and graph
 
     setInterval(function() {
+      $('title').text('Updating graph...');
+      $('#updated').addClass('updating').text('Updating graph...');
+
       $(document).trigger('update_graph');
     }, config.reload_chart_interval * 1000);
     </script>
