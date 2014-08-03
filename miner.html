@@ -223,11 +223,12 @@
           d3.select('#doa_prop').text(doa_prop.toFixed(2) + '%');
 
           if (payout) {
-            $('#payout').attr('data-value', payout);
-            d3.select('#payout').text(parseFloat(payout).toFixed(8).toString() + ' ' + currency_info.symbol);
+            $('#payout')
+              .attr('data-value', payout)
+              .text(parseFloat(payout).toFixed(8).toString() + ' ' + currency_info.symbol);
           }
           else {
-            d3.select('#payout').text('no shares yet');
+            $('#payout').text('no shares yet');
           }
         }
 
