@@ -327,6 +327,22 @@
                 tr.append($('<td/>').append(blockinfo));
                 tr.append($('<td/>').addClass('text-center').append(stale_info));
                 $('#recent_shares tbody').append(tr);
+
+                var rows = $('#recent_shares tbody tr').get();
+                rows.sort(function(a, b) {
+                    // eq(0) gives us column 1 (the hidden timestamp column)
+                    var A = parseFloat($(a).children('td').eq(0).text());
+                    var B = parseFloat($(b).children('td').eq(0).text());
+
+                    if(A > B) { return -1; }
+                    if(A < B) { return 1;  }
+                    return 0;
+                });
+
+                // replace the rows with the sorted ones
+                $.each(rows, function(index, row) {
+                  $('#recent_shares').children('tbody').append(row);
+                });
               }
             });
           });
