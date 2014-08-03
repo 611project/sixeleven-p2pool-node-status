@@ -242,7 +242,7 @@
                         d3.select("#loading").selectAll("*").remove();
 
                         var div = d3.select('#local_rate_graph').selectAll().data([miner_hash]).enter().append("div");
-                        div.append('h3').text('Local Rate');
+                        div.append('h3').text('Local Hashrate');
                         div.append("svg:svg").each(function(u) {
                             plot(d3.select(this), "H/s", "H", [
                                 {"data": data.map(function(d){ return [d[0], u in d[1] ? d[1][u] : d[3], d[2]] }), "color": "#5bb75b", "label": "Total"},
