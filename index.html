@@ -399,7 +399,7 @@
       $('#global_rate').text(global_rate);
 
       $('#share_difficulty')
-        .text(parseFloat(global_stats.min_difficulty).toFixed(2));
+        .text(addCommas(parseFloat(global_stats.min_difficulty).toFixed(2)));
 
       $('#block_value')
         .attr('data-value', parseFloat(local_stats.block_value).toString())
@@ -617,11 +617,11 @@
       $('#network_rate')
 	      .text(formatHashrate(parseFloat(mining_info.networkhashps)));
       $('#blocks')
-	      .text(mining_info.blocks);
+	      .text(addCommas(mining_info.blocks));
       $('#bitcoind_uptime')
         .text(bitcoind_info.uptime);
       $('#block_difficulty')
-	      .text(mining_info.difficulty);
+	      .text(addCommas(mining_info.difficulty));
       $('#current_block_size')
 	      .text(mining_info.currentblocksize);
       $('#current_block_txs')
