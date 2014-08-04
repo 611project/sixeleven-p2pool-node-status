@@ -19,6 +19,7 @@
     <script src="js/jquery-2.0.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-dateFormat.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
 
     <script src="js/util.js"></script>
     <script src="js/charts.js"></script>
@@ -79,7 +80,9 @@
           <small>
             <span id='_node' class='hidden'>Node: </span>
             <span id='node' class='hidden'></span><br/>
-            <span id='updated'></span>
+            <span id='updated'></span><br/>
+            <span>Audio: </span>
+            <a href="#" onclick="toggleAudio();" id="audio-status"></a>
           </small>
         </b>
       </div>
@@ -268,6 +271,7 @@
 
     // init
     $(document).on('init', function(e, eventInfo) {
+      initAudio();
       fetchdata();
       fetchBlocks();
       fetchBitcoind();
