@@ -623,9 +623,9 @@
       $('#block_difficulty')
 	      .text(addCommas(mining_info.difficulty));
       $('#current_block_size')
-	      .text(mining_info.currentblocksize);
+	      .text(addCommas(mining_info.currentblocksize));
       $('#current_block_txs')
-	      .text(mining_info.currentblocktx);
+	      .text(addCommas(mining_info.currentblocktx));
       $('#bitcoind_version')
         .text(bitcoind_info.version);
       $('#bitcoind_protocol')
