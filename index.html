@@ -661,11 +661,12 @@
         .text(inbound_status.length);
 
       connection_times = $.map(bitcoind_peer_info, function(info, i) { return info['conntime']; });
-      max_connection_time = Math.max.apply(null, connection_times) / 1000;
-      max_connected_since = new Date(new Date() - max_connection_time);
+      earliest_connection = Math.min.apply(null, connection_times);
+      up_since = new Date(earliest_connection * 1000);
+      up_seconds = (new Date() - up_since)/1000;
 
       $('#bitcoind_uptime')
-        .text(max_connection_time.toString().formatSeconds());
+        .text(up_seconds.toString().formatSeconds());
       $('#bitcoind_relay_fee')
         .attr('data-value', bitcoind_info.relayfee)
         .text(bitcoind_info.relayfee.toString() + ' BTC');
