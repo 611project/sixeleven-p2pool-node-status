@@ -1,4 +1,26 @@
 body {
+  font-family: 'Roboto', Helvetica, sans-serif;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+line {
+    stroke: black;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.plotline {
+    stroke-width: 1.4;
+    fill: none;
+}
+
+text {
+    font-family: Sans-serif;
+    font-size: 12px;
+}
+
+body {
   background: #efefef;
   margin: 0 !important;
   padding: 0;
@@ -76,4 +98,13 @@ button.to_btc {
 #updated.updating {
   font-weight: bold;
   color: #5bb75b;
+}
+
+#miner-summary table table td:first-child {
+  font-weight: bold;
+  width: 185px;
+}
+
+#miner-summary {
+  margin-bottom: 20px;
 }
