@@ -144,8 +144,14 @@
         <tr>
           <td width='25%'>Node efficiency:</td>
           <td width='25%' class='text-right'><span id='efficiency'></span></td>
+          <td width='25%'>Node latency:</td>
+          <td width='25%' class='text-right'><span id='node_latency'></span></td>
+        </tr>
+        <tr>
           <td width='25%'>Node fee:</td>
           <td width='25%' class='text-right'><span id='node_fee'></span></td>
+          <td width='25%'>Node donation:</td>
+          <td width='25%' class='text-right'><span id='node_donation'></span></td>
         </tr>
       </table>
 
@@ -265,7 +271,7 @@
         global_stats, current_payouts, 
         recent_blocks, current_block, last_block,
         recent_shares, current_share, last_share,
-        payout_addr;
+        payout_addr, getwork_latency;
 
     var local_hashrate= 0, local_doa_hashrate= 0;
 
@@ -277,6 +283,7 @@
       fetchBitcoind();
       fetchBlockchainInfo();
       fetchGraph('day');
+      updateLatency();
     });
 
     $(document).on('update', function(e, eventInfo) {
@@ -285,6 +292,7 @@
       fetchBlocks();
       fetchBitcoind();
       fetchBlockchainInfo();
+      updateLatency();
     });
 
     $(document).on('update_graph', function(e, eventInfo) {
@@ -408,10 +416,10 @@
 
       $('#efficiency')
 	    .text(parseFloat(local_stats.efficiency * 100).toFixed(2) + '%');
-      $('#node_donation')
-        .text((local_stats.donation_proportion * 100) + '%');
       $('#node_fee')
         .text(local_stats.fee + '%');
+      $('#node_donation')
+        .text((local_stats.donation_proportion * 100) + '%');
       $('#p2pool_version')
         .text(local_stats.version);
       $('#protocol_version')
@@ -682,6 +690,7 @@
 
                 $.getJSON('/global_stats', function(data) {
                   if(data) global_stats= data;
+
                   $(document).trigger('update_miners');
                   $(document).trigger('update_time');
                 });
@@ -756,9 +765,25 @@
 
       $(document).trigger('update_graph');
     }
+
+    var updateLatency = function () {
+      $.getJSON('/web/graph_data/getwork_latency/last_hour', function(data) {
+        if (data && data[0][1] != null) {
+          getwork_latency = data[0][1];
+        }
+
+        if (getwork_latency) {
+          $('#node_latency')
+            .text((getwork_latency * 1e3).toFixed(0).toString() + ' ms');
+        } else {
+          $('#node_latency').html('&dash;');
+        }
+      });
+    }
+
     // update tables and miner data, hide any previous alerts
 
-    setInterval(function() {
+    var updateData = function() {
       if(!$('#node_alerts').hasClass('hidden')) {
         $('#node_alerts').fadeOut(0, function() {
           $(this).attr('style', '').addClass('hidden');
@@ -768,10 +793,9 @@
       $('title').text('Updating data...');
       $('#updated').addClass('updating').text('Updating data...');
       $(document).trigger('update');
-    }, config.reload_interval * 1000);
+    }
 
-    // update blocks and graph
-
+    setInterval(updateData, config.reload_interval * 1000);
     setInterval(updateGraph, config.reload_chart_interval * 1000);
     </script>
   </body>
