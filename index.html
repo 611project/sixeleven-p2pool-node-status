@@ -515,22 +515,6 @@
         table.deleteRow(i);
       }
       
-      current_share = recent_shares[0];
-      if (last_share == null) { last_share = current_share; }
-      if (current_share != last_share && current_share != null) {
-        if (config.enable_audio) {
-          playNewShareSound(); 
-        }
-
-        var new_share_link = $('<a/>')
-          .attr('href', 'share.html#' + current_share)
-          .text('New share found! ' + current_share)
-        $('#node_alerts').empty();
-        $('#node_alerts').append(new_share_link);
-        $('#node_alerts').removeClass('hidden'); 
-      }
-      last_share = current_share;
-      
       $.each(recent_shares, function(key, block) {
         hash = block;
 
@@ -589,6 +573,24 @@
       $.each(rows, function(index, row) {
         $('#recent_shares').children('tbody').append(row);
       });
+
+      // notification for share change
+      // since recent_shares are returned in an abitrary order, we had to wait for sorting before checking for the most recent
+      current_share = $('#recent_shares').children('tbody').children('tr').first().attr('id');
+      if (last_share == null) { last_share = current_share; }
+      if (current_share != last_share && current_share != null) {
+        if (config.enable_audio) {
+          playNewShareSound();
+        }
+
+        var new_share_link = $('<a/>')
+          .attr('href', 'share.html#' + current_share)
+          .text('New share found! ' + current_share)
+        $('#node_alerts').empty();
+        $('#node_alerts').append(new_share_link);
+        $('#node_alerts').removeClass('hidden');
+      }
+      last_share = current_share;
     });
 
     // Place the currency symbol for the currency the node is mining.  If
