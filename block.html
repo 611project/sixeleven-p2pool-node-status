@@ -76,7 +76,7 @@
                         return;
                     }
 
-                    b.append('p').append('span').text('Block: ').append('a').attr('href', '#' + block.hash).text(block.hash);
+                    b.append('p').append('span').text('Block: ' + block.hash);
                     b.append('p').append('span').text('Time: ' + new Date(1000 * block.time));
                     b.append('p').append('span').text('Difficulty: ' + block.difficulty);
                     b.append('p').append('span').text('Height: ' + block.height);
