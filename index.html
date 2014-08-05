@@ -144,7 +144,7 @@
         <tr>
           <td width='25%'>Node efficiency:</td>
           <td width='25%' class='text-right'><span id='efficiency'></span></td>
-          <td width='25%'>Node latency:</td>
+          <td width='25%'>Node getwork latency:</td>
           <td width='25%' class='text-right'><span id='node_latency'></span></td>
         </tr>
         <tr>
@@ -189,15 +189,25 @@
         </tr>
         <tr>
           <td width='25%'>Connections:</td>
-          <td width='25%' class='text-right'><span id='bitcoind_connections'></span></td>
-          <td width='25%'>Relay fee:</td>
-          <td width='25%' class='text-right'><button class="to_usd"><span id='bitcoind_relay_fee'></span></button></td>
+          <td width='25%' class='text-right'>
+            <img title="in" src="img/in.png"/> <span id='bitcoind_connections_in'></span>
+            /
+            <span id='bitcoind_connections_out'></span> <img title="out" src="img/out.png">
+          </td>
+          <td width='25%'>Node uptime:</td>
+          <td width='25%' class='text-right'><span id='bitcoind_uptime'></span></td>
         </tr>
         <tr>
           <td width='25%'>Node bitcoind version:</td>
           <td width='25%' class='text-right'><span id='bitcoind_version'></span></td>
           <td width='25%'>Protocol version:</td>
           <td width='25%' class='text-right'><span id='bitcoind_protocol'></span></td>
+        </tr>
+        <tr>
+          <td width='25%'>Relay fee:</td>
+          <td width='25%' class='text-right'><button class="to_usd"><span id='bitcoind_relay_fee'></span></button></td>
+          <td width='25%'>Peer latency:</td>
+          <td width='25%' class='text-right'><span id='bitcoind_peer_latency'></span></td>
         </tr>
       </table>
 
@@ -641,11 +651,39 @@
         .text(bitcoind_info.version);
       $('#bitcoind_protocol')
         .text(bitcoind_info.protocolversion);
-      $('#bitcoind_connections')
-        .text(bitcoind_info.connections);
+
+      inbound_status = $.map(bitcoind_peer_info, function(info, i) { return info['inbound']; });
+      inbound_only = $.grep(inbound_status, function (elem) { return elem === true; }).length;
+
+      $('#bitcoind_connections_in')
+        .text(inbound_only);
+      $('#bitcoind_connections_out')
+        .text(inbound_status.length);
+
+      connection_times = $.map(bitcoind_peer_info, function(info, i) { return info['conntime']; });
+      max_connection_time = Math.max.apply(null, connection_times) / 1000;
+      max_connected_since = new Date(new Date() - max_connection_time);
+
+      $('#bitcoind_uptime')
+        .text(max_connection_time.toString().formatSeconds());
       $('#bitcoind_relay_fee')
         .attr('data-value', bitcoind_info.relayfee)
         .text(bitcoind_info.relayfee.toString() + ' BTC');
+
+      bitcoind_peer_pingtimes = $.map(bitcoind_peer_info, function(value, i) {
+        ping = parseFloat(value['pingtime']);
+        return (ping > 0 ? ping : null);
+      });
+
+      total = 0;
+      for (var i = 0; i < bitcoind_peer_pingtimes.length; i++) {
+          total += bitcoind_peer_pingtimes[i];
+      }
+
+      bitcoind_peer_avg_ping = (total / bitcoind_peer_pingtimes.length * 1e3);
+
+      $('#bitcoind_peer_latency')
+        .text(bitcoind_peer_avg_ping.toFixed(0).toString() + ' ms');
     });
 
     $(document).on('update_blockchain_info', function(e, eventInfo) {
@@ -715,14 +753,19 @@
       });
     }
 
-    var bitcoind_info, mining_info;
+    var bitcoind_info, mining_info, bitcoind_peer_info;
     var fetchBitcoind = function() {
       $.getJSON('/bitcoind/getinfo', function(data) {
         bitcoind_info = data;
 
         $.getJSON('/bitcoind/getmininginfo', function(data) {
           mining_info = data;
-          $(document).trigger('update_bitcoind');
+
+          $.getJSON('/bitcoind/getpeerinfo', function(data) {
+            bitcoind_peer_info = data;
+
+            $(document).trigger('update_bitcoind');
+          });
         });
       });
     }
