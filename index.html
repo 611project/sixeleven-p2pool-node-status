@@ -292,11 +292,11 @@
       fetchBlocks();
       fetchBitcoind();
       fetchBlockchainInfo();
-      updateLatency();
     });
 
     $(document).on('update_graph', function(e, eventInfo) {
       fetchGraph('day');
+      updateLatency();
     });
 
     // Fills the list of active miners on this node.
