@@ -105,3 +105,9 @@ var toggleAudio = function () {
   $.cookie('enable-audio', config.enable_audio, { expires: 365, path: '/' });
   $('#audio-status').text(new_value ? 'Enabled' : 'Disabled');
 }
+
+var rotateAd = function () {
+  if(config.ad_url && config.ad_url.length > 0) {
+    $("#ad").load(config.ad_url);
+  }
+}

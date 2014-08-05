@@ -10,9 +10,6 @@ $(document).ready(function() {
   if(config.footer_url && config.footer_url.length > 0) {
     $("#footer").load(config.footer_url);
   }
-  if(config.ad_url && config.ad_url.length > 0) {
-    $("#ad").load(config.ad_url);
-  }
 
   // set node name
   if (config.node_name) {
@@ -37,4 +34,6 @@ $(document).ready(function() {
   // set updated at
   var dts = $.format.date(new Date(), 'yyyy-MM-dd HH:mm:ss');
   $('#updated').text('Updated: ' + dts);
+
+  rotateAd();
 });

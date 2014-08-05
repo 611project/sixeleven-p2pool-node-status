@@ -91,8 +91,6 @@
 
       <div id="loading"><span>Loading...</span></div>
 
-      <div id="local_rate_graph"></div>
-
       <div class="text-center" id="periods">
         <div>
           Periods: <span id="period_chooser"></span>
@@ -103,7 +101,7 @@
         </div>
       </div>
 
-      <br/>
+      <div id="local_rate_graph"></div>
 
       <div id="miner-summary">
         <h4>Miner Summary</h4>
@@ -172,7 +170,7 @@
             h1.append('a').attr('href', '.').text('P2Pool Node Status');
             h1.append('span').text(' > Miner ' + miner_hash.substr(0,8));
 
-        periods = ["Day", "Week", "Month", "Year"];
+        periods = ["Hour", "Day", "Week", "Month", "Year"];
         d3.select("#period_chooser").selectAll().data(periods).enter().append("a")
             .text(function(period) { return period })
             .attr('href', function(period){ return "?" + period + "#" + miner_hash})
@@ -182,7 +180,7 @@
 
         if(period.length < 3) {
             window.location.hash = miner_hash;
-            window.location.search = "Day";
+            window.location.search = "Hour";
         } else if (miner_hash == "") {
             window.location = '/';
         } else {
