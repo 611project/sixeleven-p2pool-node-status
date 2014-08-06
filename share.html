@@ -86,50 +86,84 @@
                         b.append('p').text('share not found');
                         return;
                     }
-                    var parent = b.append('p')
-                        parent.append('span').text('Parent: ');
-                        parent.append('a').attr('href', '#' + share.parent).text(share.parent.substr(-8));
-                    var children = b.append('p');
-                        children.append('span').text('Children: ');
-                        children.selectAll().data(share.children).enter().append('span').text(' ').append('a')
-                            .attr('href', function(c){return '#' + c})
-                            .text(function(c){return c.substr(-8)});
 
                     b.append('h2').text('Share data');
-                    b.append('p').text('Timestamp: ' + new Date(1000*share.share_data.timestamp) + ' (' + share.share_data.timestamp + ')');
-                    b.append('p').text('Difficulty: ' + target_to_difficulty(share.share_data.target));
-                    b.append('p').text('Minimum difficulty: ' + target_to_difficulty(share.share_data.max_target));
-                    b.append('p').text('Payout address: ').append('code').text(share.share_data.payout_address);
-                    b.append('p').text('Donation amount: ' + d3.format('.3p')(share.share_data.donation));
-                    b.append('p').text('Last stale: ' + share.share_data.stale_info);
-                    b.append('p').text('Nonce: ' + share.share_data.nonce);
-                    b.append('p').text('Desired version: ' + share.share_data.desired_version);
-                    b.append('p').text('Absolute height: ' + share.share_data.absheight);
-                    b.append('p').text('Absolute work: ' + share.share_data.abswork);
 
-                    b.append('h2').text('Generation transaction');
-                    b.append('p').text('Hash: ' + share.block.gentx.hash);
-                    b.append('p').text('Coinbase (hex): ' + share.block.gentx.coinbase);
+                    var table = b.append('table').attr('class', 'table table-hover').append('tbody');
+                    tr = table.append('tr');
+                    tr.append('td').text('Parent');
+                    tr.append('td').attr('class','text-right').append('a').attr('href', '#' + share.parent).text(share.parent.substr(-8));
+                    tr.append('td').text('Children');
+                    tr.append('td').attr('class','text-right').selectAll().data(share.children).enter().append('span').text(' ').append('a')
+                            .attr('href', function(c){return '#' + c})
+                            .text(function(c){return c.substr(-8)});
+                    tr = table.append('tr');
+                    tr.append('td').text('Timestamp');
+                    tr.append('td').attr('class','text-right longDateFormat').text($.format.toBrowserTimeZone(new Date(1000*share.share_data.timestamp)));
+                    tr.append('td').text('Difficulty');
+                    tr.append('td').attr('class','text-right').text(target_to_difficulty(share.share_data.target));
+                    tr = table.append('tr');
+                    tr.append('td').text('Minimum difficulty');
+                    tr.append('td').attr('class','text-right').text(target_to_difficulty(share.share_data.max_target));
+                    tr.append('td').text('Payout address');
+                    tr.append('td').attr('class','text-right').append('code').text(share.share_data.payout_address);
+                    tr = table.append('tr');
+                    tr.append('td').text('Donation amount');
+                    tr.append('td').attr('class','text-right').text(d3.format('.3p')(share.share_data.donation));
+                    tr.append('td').text('Last stale');
+                    tr.append('td').attr('class','text-right').text(share.share_data.stale_info);
+                    tr = table.append('tr');
+                    tr.append('td').text('Nonce');
+                    tr.append('td').attr('class','text-right').text(share.share_data.nonce);
+                    tr.append('td').text('Desired version');
+                    tr.append('td').attr('class','text-right').text(share.share_data.desired_version);
+                    tr = table.append('tr');
+                    tr.append('td').text('Absolute height');
+                    tr.append('td').attr('class','text-right').text(share.share_data.absheight);
+                    tr.append('td').text('Absolute work');
+                    tr.append('td').attr('class','text-right').text(share.share_data.abswork);
+                    tr = table.append('tr');
+                    tr.append('td').text('Verified');
+                    tr.append('td').attr('class','text-right').text(share.local.verified);
+                    tr.append('td').text('Time first seen');
+                    tr.append('td').attr('class','text-right').text(new Date(1000*share.local.time_first_seen));
+                    if (share.local.peer_first_received_from) {
+                      tr = table.append('tr');
+                      tr.append('td').text('Received from');
+                      tr.append('td').attr('class','text-right').text(share.local.peer_first_received_from);
+                      tr.append('td');
+                      tr.append('td').attr('class','text-right');
+                    }
+
+                    b.append('h2').text('Block data');
+
+                    var table = b.append('table').attr('class', 'table table-hover').append('tbody');
+                    tr = table.append('tr');
+                    tr.append('td').text('Timestamp');
+                    tr.append('td').attr('class','text-right longDateFormat').text($.format.toBrowserTimeZone(new Date(1000*share.block.header.timestamp)));
+                    tr.append('td').text('Nonce');
+                    tr.append('td').attr('class', 'text-right').text(share.block.header.nonce);
                     value = share.block.gentx.value;
-                    b.append('p').html('Value: <button class="to_usd"><span data-value="'+value+'">' + value + ' ' + currency_info.symbol + '</span></button>');
-                    b.append('p').text('Last txout nonce (used by Stratum miners): ' + share.block.gentx.last_txout_nonce);
+                    tr = table.append('tr');
+                    tr.append('td').text('Value');
+                    tr.append('td').attr('class','text-right').html('<button class="to_usd"><span data-value="'+value+'">' + value + ' ' + currency_info.symbol + '</span></button>');
+                    tr.append('td').text('Difficulty');
+                    tr.append('td').attr('class', 'text-right').text(target_to_difficulty(share.block.header.target));
 
-                    b.append('h2').text('Local data');
-                    b.append('p').text('Verified: ' + share.local.verified);
-                    b.append('p').text('Time first seen: ' + new Date(1000*share.local.time_first_seen) + ' (' + share.local.time_first_seen + ')');
-                    b.append('p').text('Peer first received from: ' + share.local.peer_first_received_from);
-                    b.append('h2').text('Block');
-                    var block = b.append('p')
-                        block.append('span').text('Hash: ' + share.block.hash);
-                    b.append('h3').text('Header');
-                    b.append('p').text('Version: ' + share.block.header.version);
-                    var prevblock = b.append('p')
-                        prevblock.append('span').text('Previous block: ');
-                        prevblock.append('a').attr('href', 'block.html#' + share.block.header.previous_block).text(share.block.header.previous_block);
-                    b.append('p').text('Merkle root: ' + share.block.header.merkle_root);
-                    b.append('p').text('Timestamp: ' + new Date(1000*share.block.header.timestamp) + ' (' + share.block.header.timestamp + ')');
-                    b.append('p').text('Difficulty: ' + target_to_difficulty(share.block.header.target));
-                    b.append('p').text('Nonce: ' + share.block.header.nonce);
+                    tr = table.append('tr');
+                    tr.append('td').text('Hash');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).text(share.block.hash);
+                    tr = table.append('tr');
+                    tr.append('td').text('Previous block');
+                    previous = tr.append('td').attr('class','text-right').attr('colspan', 3);
+                    previous.append('a').attr('href', 'block.html#' + share.block.header.previous_block).text(share.block.header.previous_block);
+                    tr = table.append('tr');
+                    tr.append('td').text('Merkle root');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).text(share.block.header.merkle_root);
+                    tr = table.append('tr');
+                    tr.append('td').text('Generation transaction hash');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).text(share.block.gentx.hash);
+
                     bindCurrencyConversionButtons();
                     return true;
                 });

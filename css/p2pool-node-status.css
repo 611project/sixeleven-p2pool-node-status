@@ -108,3 +108,7 @@ button.to_btc {
 #miner-summary {
   margin-bottom: 20px;
 }
+
+#share_data table td {
+  width: 25%;
+}
