@@ -76,33 +76,38 @@
                         return;
                     }
 
-                    b.append('p').append('span').text('Transaction: ' + transaction.txid);
-                    if (transaction.vin[0].coinbase) {
-                        b.append('p').append('span').text('VIN: ' + transaction.vin[0].coinbase);
-                    }
-                    b.append('p').append('span').text('Time: ' + new Date(1000 * transaction.time));
-                    b.append('p').append('span').text('Confirmations: ' + transaction.confirmations);
-                    b.append('p').append('span').text('Block: ').append('a').attr('href', 'block.html#' + transaction.blockhash).text(transaction.blockhash);
-                    b.append('p').append('span').text('Block time: ' + new Date(1000 * transaction.blocktime));
-                    
                     var transaction_total = 0;
                     var transaction_count = 0;
                     $.each(transaction.vout, function(index, vout) {
                         transaction_count += 1;
                         transaction_total += vout.value;
                     });
+                    average_transaction = (transaction_total / transaction_count).toFixed(8);
 
-                    b.append('p').html('Block value: ' + '<button class="to_usd"><span data-value="'+transaction_total+'">' + transaction_total + ' ' + currency_info.symbol + '</span></button>');
+                    var table = b.append('table').attr('class', 'table table-hover').append('tbody');
+                    tr = table.append('tr');
+                    tr.append('td').text('Timestamp');
+                    tr.append('td').attr('class','text-right longDateFormat').text($.format.toBrowserTimeZone(new Date(1000*transaction.time)));
+                    tr.append('td').text('Confirmations');
+                    tr.append('td').attr('class', 'text-right').text(transaction.confirmations);
+                    tr = table.append('tr');
+                    tr.append('td').text('Block value');
+                    tr.append('td').attr('class','text-right').html('<button class="to_usd"><span data-value="'+transaction_total+'">' + transaction_total + ' ' + currency_info.symbol + '</span></button>');
+                    tr.append('td').text('Average transaction');
+                    tr.append('td').attr('class', 'text-right').html('<button class="to_usd"><span data-value="'+average_transaction+'">' + average_transaction + ' ' + currency_info.symbol + '</span></button>');
 
-                    average = (transaction_total / transaction_count).toFixed(8);
-                    b.append('p').html('Avg/trans: ' + '<button class="to_usd"><span data-value="'+average+'">' + average + ' ' + currency_info.symbol + '</span></button>');
+                    tr = table.append('tr');
+                    tr.append('td').text('Hash');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).text(transaction.txid);
+                    tr = table.append('tr');
+                    tr.append('td').text('Block');
+                    tr.append('td').attr('class', 'text-right').attr('colspan', 3).append('a').attr('href', 'block.html#' + transaction.blockhash).text(transaction.blockhash);
 
-                    b.append('br');
-
-                    var address_table = b.append('table');
-                    var row = address_table.append('tr');
-                    row.append('th').text('Address');
-                    row.append('th').text('Value');
+                    var address_table = b.append('table').attr('class', 'table table-hover').attr('id', 'transaction_table');
+                    var head = address_table.append('thead').append('tr');
+                    head.append('th').text('Address');
+                    head.append('th').attr('class', 'text-right').text('Value');
+                    address_table = address_table.append('tbody');
 
                     $.each(transaction.vout, function(index, vout) {
                         if (vout.value <= 0) { 
@@ -112,7 +117,7 @@
                         var tr = address_table.append('tr');
                         tr.append('td').append('a').attr('href', currency_info.address_explorer_url_prefix + vout.scriptPubKey.addresses).text(vout.scriptPubKey.addresses);
 
-                        tr.append('td').html('<button class="to_usd"><span data-value="'+vout.value+'">' + vout.value + ' ' + currency_info.symbol + '</span></button>');
+                        tr.append('td').attr('class', 'text-right').html('<button class="to_usd"><span data-value="'+vout.value+'">' + vout.value + ' ' + currency_info.symbol + '</span></button>');
                     });
 
                     bindCurrencyConversionButtons();

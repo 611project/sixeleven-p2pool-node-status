@@ -110,6 +110,11 @@ button.to_btc {
 }
 
 #share_data table td,
-#block_data table td {
+#block_data table td,
+#transaction_data table td {
   width: 25%;
+}
+
+#transaction_table {
+  width: 50%;
 }
