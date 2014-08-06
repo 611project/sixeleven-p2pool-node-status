@@ -780,8 +780,12 @@
 
     var updateLatency = function () {
       $.getJSON('/web/graph_data/getwork_latency/last_hour', function(data) {
-        if (data && data[0][1] != null) {
-          getwork_latency = data[0][1];
+        if (data) {
+          $.map(data, function(row) {
+            if (getwork_latency == null) {
+              getwork_latency = row[1];
+            }
+          });
         }
 
         if (getwork_latency) {
