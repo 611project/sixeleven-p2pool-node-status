@@ -109,6 +109,7 @@ button.to_btc {
   margin-bottom: 20px;
 }
 
-#share_data table td {
+#share_data table td,
+#block_data table td {
   width: 25%;
 }

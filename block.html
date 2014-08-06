@@ -76,28 +76,33 @@
                         return;
                     }
 
-                    b.append('p').append('span').text('Block: ' + block.hash);
-                    b.append('p').append('span').text('Time: ' + new Date(1000 * block.time));
-                    b.append('p').append('span').text('Difficulty: ' + block.difficulty);
-                    b.append('p').append('span').text('Height: ' + block.height);
-                    b.append('p').append('span').text('Confirmations: ' + block.confirmations);
+                    var table = b.append('table').attr('class', 'table table-hover').append('tbody');
+                    tr = table.append('tr');
+                    tr.append('td').text('Timestamp');
+                    tr.append('td').attr('class','text-right longDateFormat').text($.format.toBrowserTimeZone(new Date(1000*block.time)));
+                    tr.append('td').text('Difficulty');
+                    tr.append('td').attr('class', 'text-right').text(block.difficulty);
+                    tr = table.append('tr');
+                    tr.append('td').text('Confirmations');
+                    tr.append('td').attr('class','text-right').text(block.confirmations);
+                    tr.append('td').text('Height');
+                    tr.append('td').attr('class', 'text-right').text(block.height);
+
+                    tr = table.append('tr');
+                    tr.append('td').text('Hash');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).text(block.hash);
+                    tr = table.append('tr');
+                    tr.append('td').text('Previous block');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).append('a').attr('href', '#' + block.previousblockhash).text(block.previousblockhash);
+                    tr = table.append('tr');
+                    tr.append('td').text('Next block');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).append('a').attr('href', '#' + block.nextblockhash).text(block.nextblockhash);
+                    tr = table.append('tr');
+                    tr.append('td').text('Merkle root');
+                    tr.append('td').attr('class','text-right').attr('colspan', 3).text(block.merkleroot);
                     
-                    b.append('br');
-
-                    var previous = b.append('p');
-                        previous.append('span').text('Previous Block Hash: ');
-                        previous.append('a').attr('href', '#' + block.previousblockhash).text(block.previousblockhash);
-
-                    var next = b.append('p');
-                        next.append('span').text('Next Block Hash: ');
-                        next.append('a').attr('href', '#' + block.nextblockhash).text(block.nextblockhash);
-
-                    b.append('p').append('span').text('Merkle Root: ' + block.merkleroot);
-                    b.append('p').append('span').text('Nonce: ' + block.nonce);
-
-                    b.append('br');
-
-                    var transactions = b.append('p').append('span').text('Transactions: ').append('ul');
+                    b.append('p').append('h3').text('Transactions');
+                    var transactions = b.append('ul');
                     $.each(block.tx, function(index, value) {
                         transactions.append('li').append('a').attr('href', 'transaction.html#' + value).text(value);
                     });
