@@ -342,6 +342,7 @@
           var B = $(b).children('td').eq(4).text();
 
           if(A == 'no shares yet') { return 1; }
+          if(B == 'no shares yet') { return -1; }
           if(A > B) { return -1; }
           if(A < B) { return 1;  }
           return 0;
