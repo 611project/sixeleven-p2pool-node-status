@@ -62,7 +62,7 @@ var bindCurrencyConversionButtons = function () {
   $('button.to_usd').on('click', function(event){
     if (this.className == 'to_btc') {
       bitcoin_amount = parseFloat(this.firstChild.dataset['value']);
-      this.firstChild.innerHTML = bitcoin_amount + ' BTC';
+      this.firstChild.innerHTML = addCommas(bitcoin_amount) + ' BTC';
       this.className = 'to_usd';
     } else {
       bitcoin_amount = parseFloat(this.firstChild.dataset['value']);

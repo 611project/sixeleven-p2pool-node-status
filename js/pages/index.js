@@ -432,7 +432,7 @@ $(document).on('update_bitcoind', function(e, eventInfo) {
 $(document).on('update_blockchain_info', function(e, eventInfo) {
   $('#total_bitcoins')
     .attr('data-value', total_bitcoins)
-    .text(total_bitcoins.toString() + ' BTC');
+    .text(addCommas(total_bitcoins.toString()) + ' BTC');
   $('#block_interval')
     .text((''+block_interval).formatSeconds());
   $('#block_eta')
