@@ -367,13 +367,15 @@ function data_to_lines(data, sort_key) {
     return lines;
 }
 
-function change_period(period, currency_info) {
+function change_period(period, currency_info, homepage) {
     d3.select("#period_current").text(period);
     var lowerperiod = period.toLowerCase();
     plot_later(d3.select("#local"), "H/s", "H", [
         {"url": "../web/graph_data/local_hash_rate/last_" + lowerperiod, "color": "#5bb75b", "label": "Total"},
         {"url": "../web/graph_data/local_dead_hash_rate/last_" + lowerperiod, "color": "#FF0000", "label": "Dead"}
     ]);
+    if (homepage) { return; }
+
     d3.json("../web/graph_data/local_share_hash_rates/last_" + lowerperiod, function(data) {
         plot(d3.select('#local_shares'), 'H/s', 'H', data_to_lines(data), true);
     });

@@ -540,7 +540,7 @@ var fetchBlockchainInfo = function() {
 
 var fetchGraph= function(interval) {
   $.getJSON('/web/currency_info', function(currency_info) {
-    change_period('hour', currency_info);
+    change_period('hour', currency_info, true);
     $(document).trigger('update_time');
   });
 };
