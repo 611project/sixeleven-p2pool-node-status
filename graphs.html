@@ -38,73 +38,51 @@
     <body>
       <div id='header'></div>
 
-    <div class="container">
-      <div class="page-header">
-        <div id="ad"></div>
-        <h1><a href=".">P2Pool Node Status</a> &gt; <span id="period"></span> Graphs</h1>
+      <div class="container">
+        <div class="page-header">
+          <div id="ad"></div>
+          <h1><a href=".">P2Pool Node Status</a> &gt; <span id="period"></span> Graphs</h1>
 
-        <b>
-          <small>
-            <span id='_node' class='hidden'>Node: </span>
-            <span id='node' class='hidden'></span><br/>
-            <span id='updated'></span>
-          </small>
-        </b>
-      </div>
+          <b>
+            <small>
+              <span id='_node' class='hidden'>Node: </span>
+              <span id='node' class='hidden'></span><br/>
+              <span id='updated'></span>
+            </small>
+          </b>
+        </div>
         
-        <p>Periods: <span id="period_chooser"></span> Current: <span id="period_current"></span></p>
+          <p>Periods: <span id="period_chooser"></span> Current: <span id="period_current"></span></p>
         
-        <div id="warnings"></div>
+          <div id="warnings"></div>
         
-        <h2>Local rate</h2>
-        <svg id="local"></svg>
+          <h2>Local rate</h2>
+          <svg id="local"></svg>
         
-        <h2>Local rate reflected in shares</h2>
-        <svg id="local_shares"></svg>
+          <h2>Local rate reflected in shares</h2>
+          <svg id="local_shares"></svg>
        
-        <h2>Pool rate</h2>
-        <svg id="pool"></svg>
+          <h2>Pool rate</h2>
+          <svg id="pool"></svg>
         
-        <h2>Peers</h2>
-        <svg id="peers"></svg>
+          <h2>Peers</h2>
+          <svg id="peers"></svg>
 
-        <h2>Desired version rates</h2>
-        <svg id="desired_version_rates"></svg>
+          <h2>Desired version rates</h2>
+          <svg id="desired_version_rates"></svg>
         
-        <h2>Traffic rate</h2>
-        <svg id="traffic_rate"></svg>
+          <h2>Traffic rate</h2>
+          <svg id="traffic_rate"></svg>
         
-        <h2>Bitcoind GetBlockTemplate Latency</h2>
-        <svg id="getwork_latency"></svg>
+          <h2>Bitcoind GetBlockTemplate Latency</h2>
+          <svg id="getwork_latency"></svg>
         
-        <h2>Memory Usage</h2>
-        <svg id="memory_usage"></svg>
+          <h2>Memory Usage</h2>
+          <svg id="memory_usage"></svg>
+      </div>  <!-- //container -->
 
-    </div>  <!-- //container -->
+      <div id='footer'></div>
 
-    <div id='footer'></div>
-
-        <script type="text/javascript">
-            d3.json('../local_stats', function(local_stats) {
-                d3.select('#warnings').selectAll().data(local_stats.warnings).enter().append('p')
-                    .text(function(w){ return 'Warning: ' + w })
-                    .attr('style', 'color:red;border:1px solid red;padding:5px');
-            })
-            
-            periods = ["Hour", "Day", "Week", "Month", "Year"];
-            d3.select("#period_chooser").selectAll().data(periods).enter().append("a")
-                .text(function(period) { return period })
-                .attr('href', function(period){ return "?" + period })
-                .attr("style", function(d, i) { return (i == 0 ? "" : "margin-left:.4em;") });
-            period = window.location.search.substr(1);
-            if(period.length < 3) {
-                window.location.search = "Day";
-            } else {
-                d3.json('../web/currency_info', function(currency_info) {
-                    change_period(period, currency_info);
-                });
-            }
-            $('#period').text(period);
-        </script>
+      <script type="text/javascript" src="js/pages/graphs.js"></script>
     </body>
 </html>
