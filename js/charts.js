@@ -340,6 +340,7 @@ function plot_later(g, unit, total_unit, lines, stack) { // takes lines with url
     var callbacks_left = lines.length;
     lines.map(function(line) {
         d3.json(line.url, function(line_data) {
+            line_data.shift(); // get rid of the first value to prevent spikes
             line.data = line_data;
             callbacks_left--;
             if(callbacks_left == 0)
