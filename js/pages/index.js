@@ -335,6 +335,8 @@ $(document).on('update_shares', function(e, eventInfo) {
     $('#recent_shares').children('tbody').append(row);
   });
 
+  paginateTable($('#recent_shares')[0]);
+
   // notification for share change
   // since recent_shares are returned in an abitrary order, we had to wait for sorting before checking for the most recent
   current_share = $('#recent_shares').children('tbody').children('tr').first().attr('id');
