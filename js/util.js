@@ -124,15 +124,17 @@ var paginateTable = function (table) {
   $table.trigger('repaginate');
   var numRows = $table.find('tbody tr').length;
   var numPages = Math.ceil(numRows / numPerPage);
-  var $pager = $('<div id="table_pager-' + table.id + '" class="pager"></div>');
-  for (var page = 0; page < numPages; page++) {
-      $('<span class="page-number"></span>').text(page + 1).bind('click', {
-          newPage: page
-      }, function(event) {
-          currentPage = event.data['newPage'];
-          $table.trigger('repaginate');
-          $(this).addClass('active').siblings().removeClass('active');
-      }).appendTo($pager).addClass('clickable');
+  if (numPages > 1) {
+    var $pager = $('<div id="table_pager-' + table.id + '" class="pager"></div>');
+    for (var page = 0; page < numPages; page++) {
+        $('<span class="page-number"></span>').text(page + 1).bind('click', {
+            newPage: page
+        }, function(event) {
+            currentPage = event.data['newPage'];
+            $table.trigger('repaginate');
+            $(this).addClass('active').siblings().removeClass('active');
+        }).appendTo($pager).addClass('clickable');
+    }
+    $pager.insertAfter($table).find('span.page-number:first').addClass('active');
   }
-  $pager.insertAfter($table).find('span.page-number:first').addClass('active');
 }
