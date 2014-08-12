@@ -93,7 +93,7 @@ to set it to 20 seconds for example.
 
 `reload_chart_interval` sets the amount of seconds until the hashrate graph is reloaded.  In above example, it's configured to 1200 seconds (20 minutes).
 
-**Beware** that each API query puts network and CPU load on your p2pool installation.  Avoid decreasing this value too much.  In my tests, 20 to 30 seconds seem to be fair enough.
+**Beware** that each API query puts network and CPU load on your p2pool installation.  Avoid decreasing this value too much.
 
 ### Bitcoin currency conversion
 
