@@ -88,12 +88,12 @@ var addCommas = function (nStr) {
 var initAudio = function () {
   if ($.cookie('enable-audio') == undefined) {
     $.cookie('enable-audio', config.enable_audio, { expires: 365, path: '/' });
-  } else {
-    current_value = $.cookie('enable-audio');
-    current_value = current_value == 'true' ? true : false;
-    config.enable_audio = current_value;
-    $('#audio-status').text(current_value ? 'Enabled' : 'Disabled');
   }
+
+  current_value = $.cookie('enable-audio');
+  current_value = current_value == 'true' ? true : false;
+  config.enable_audio = current_value;
+  $('#audio-status').text(current_value ? 'Enabled' : 'Disabled');
 }
 
 var toggleAudio = function () {
