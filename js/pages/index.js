@@ -292,31 +292,39 @@ $(document).on('update_shares', function(e, eventInfo) {
         }
     });
 
-    if (!shareinfo) { return; }
+    if (shareinfo) {
+      var address_link= $('<a/>')
+        .attr('href', 'miner.html#' + shareinfo.payout_address)
+        .text(shareinfo.payout_address);
 
-    var address_link= $('<a/>')
-      .attr('href', 'miner.html#' + shareinfo.payout_address)
-      .text(shareinfo.payout_address);
+      var stale_info = $('<span/>');
+      if (shareinfo.stale_info == null) {
+        stale_info.addClass('green').text('valid');
+      } else {
+        stale_info.addClass('red').text(shareinfo.stale_info);
+      }
 
-    var stale_info = $('<span/>');
-    if (shareinfo.stale_info == null) {
-      stale_info.addClass('green').text('valid');
+      tr= $('<tr/>').attr('id', hash);
+
+      if(config.myself && config.myself.length > 0 && $.inArray(shareinfo.payout_address, config.myself) >= 0) {
+        tr.addClass('warning');
+      }
+
+      tr.append($('<td class="hidden"/>').text(shareinfo.timestamp));
+      tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
+      tr.append($('<td/>').append(blockinfo));
+      tr.append($('<td/>').append(address_link));
+      tr.append($('<td/>').addClass('text-center').append(stale_info));
+      $('#recent_shares tbody').append(tr);
     } else {
-      stale_info.addClass('red').text(shareinfo.stale_info);
+      tr= $('<tr/>').attr('id', hash).addClass('greyed');
+      tr.append($('<td class="hidden"/>').text('0'));
+      tr.append($('<td/>').html('&dash;'));
+      tr.append($('<td/>').text(hash));
+      tr.append($('<td/>').html('&dash;'));
+      tr.append($('<td/>').addClass('text-center').html('<span class="red">unknown</span>'));
+      $('#recent_shares tbody').append(tr);
     }
-
-    tr= $('<tr/>').attr('id', hash);
-
-    if(config.myself && config.myself.length > 0 && $.inArray(shareinfo.payout_address, config.myself) >= 0) {
-      tr.addClass('warning');
-    }
-
-    tr.append($('<td class="hidden"/>').text(shareinfo.timestamp));
-    tr.append($('<td/>').text($.format.prettyDate(new Date(shareinfo.timestamp * 1000))));
-    tr.append($('<td/>').append(blockinfo));
-    tr.append($('<td/>').append(address_link));
-    tr.append($('<td/>').addClass('text-center').append(stale_info));
-    $('#recent_shares tbody').append(tr);
   });
 
   var rows = $('#recent_shares tbody tr').get();

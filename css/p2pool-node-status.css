@@ -86,6 +86,12 @@ span.green {
   font-weight: bold;
 }
 
+.greyed {
+  color: #999;
+  background: #eee;
+  font-style: italic;
+}
+
 button.to_usd,
 button.to_btc {
   border: 0;
