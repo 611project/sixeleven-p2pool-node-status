@@ -43,7 +43,7 @@ var config = {
     "1Fi7YbpTYjHynUqbh1vwPcAqAqwQzeC1gw"
   ],
   node_name : '',
-  reload_interval : 30,
+  reload_interval : 60,
   reload_chart_interval : 600,
   convert_bitcoin_to_usd: true,
   enable_audio : true,
@@ -61,7 +61,7 @@ By default. no node name is displayed. To customize, set `node_name` equal to th
 var config = {
   myself : [],
   node_name : 'bitcoin.ramosresearch.com:9332',
-  reload_interval : 30,
+  reload_interval : 60,
   reload_chart_interval : 600,
   convert_bitcoin_to_usd: true,
   enable_audio : true,
@@ -73,7 +73,7 @@ var config = {
 
 ### Adjust the reload intervals
 
-By default the UI updates the miner list and server stats every 30 seconds.  You can adjust the `reload_interval` variable like
+By default the UI updates the miner list and server stats every 60 seconds.  You can adjust the `reload_interval` variable like this...
 
 ``` JavaScript
 var config = {
@@ -103,7 +103,7 @@ By default, Bitcoin values are automatically converted to US dollars. This is ac
 var config = {
   myself : [],
   node_name : '',
-  reload_interval : 30,
+  reload_interval : 60,
   reload_chart_interval : 600,
   convert_bitcoin_to_usd: false,
   enable_audio : false,
@@ -121,7 +121,7 @@ By default, audio is played when new shares or blocks are discovered. This can b
 var config = {
   myself : [],
   node_name : '',
-  reload_interval : 30,
+  reload_interval : 60,
   reload_chart_interval : 600,
   convert_bitcoin_to_usd: true,
   enable_audio : false,
@@ -139,7 +139,7 @@ Add HTML to the files references by `header_url`, `footer_url` and `ad_url` to d
 var config = {
   myself : [],
   node_name : '',
-  reload_interval : 30,
+  reload_interval : 60,
   reload_chart_interval : 600,
   convert_bitcoin_to_usd: true,
   enable_audio : true,
