@@ -194,10 +194,12 @@ $(document).on('update_miners', function(e, eventInfo) {
     });
   }
 
+  unknown = local_stats.shares.total - local_stats.shares.orphan - local_stats.shares.dead;
   $('#shares')
     .text('Total: ' + local_stats.shares.total
     + ' (Orphan: ' + local_stats.shares.orphan
-    + ', Dead: ' + local_stats.shares.dead + ')');
+    + ', Dead: ' + local_stats.shares.dead
+    + ', Unknown: ' + unknown + ')');
 
   if(local_hashrate !== 0) {
     time_to_share=
