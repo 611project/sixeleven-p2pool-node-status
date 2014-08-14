@@ -197,7 +197,8 @@ $(document).on('update_miners', function(e, eventInfo) {
   $('#shares')
     .text('Total: ' + local_stats.shares.total
     + ' (Orphan: ' + local_stats.shares.orphan
-    + ', Dead: ' + local_stats.shares.dead + ')');
+    + ', Dead: ' + local_stats.shares.dead
+    + ', Unknown: ' + local_stats.shares.unknown + ')');
 
   if(local_hashrate !== 0) {
     time_to_share=
