@@ -40,7 +40,6 @@ if(period.length < 3) {
     });
 
     loadGraphs();
-    loadQr();
     loadMinerTransactions();
     loadRecentShares();
 }
@@ -96,10 +95,6 @@ function loadGraphs() {
             });
         });
     });
-}
-
-function loadQr() {
-  $('img#blockchain_qr').attr('src', 'https://blockchain.info/qr?data=' + miner_hash + '&size=200');
 }
 
 function loadMinerTransactions() {
