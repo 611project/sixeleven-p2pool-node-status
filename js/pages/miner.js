@@ -40,6 +40,7 @@ if(period.length < 3) {
     });
 
     loadGraphs();
+    loadQr();
     loadMinerTransactions();
     loadRecentShares();
 }
@@ -97,26 +98,33 @@ function loadGraphs() {
     });
 }
 
+function loadQr() {
+  $('img#blockchain_qr').attr('src', 'https://blockchain.info/qr?data=' + miner_hash + '&size=200');
+}
+
 function loadMinerTransactions() {
-  $.getJSON('https://blockchain.info/address/'+miner_hash+'?format=json&limit=0&cors=true', function(data) {
-    received_by_address = data['total_received'];
-    sent_by_address     = data['total_sent'];
-    address_balance     = data['final_balance'];
-    num_transactions    = data['n_tx'];
+  $.getJSON('https://blockchain.info/q/getreceivedbyaddress/' + miner_hash + '?cors=true', function(data) {
+    var received_by_address = data;
 
-    $('#total_received')
-      .attr('data-value', satoshiToBTC(received_by_address))
-      .text(satoshiToBTC(received_by_address).toString() + ' BTC');
+    $.getJSON('https://blockchain.info/q/getsentbyaddress/' + miner_hash + '?cors=true', function(data) {
+      var sent_by_address = data;
 
-    $('#total_sent')
-      .attr('data-value', satoshiToBTC(sent_by_address))
-      .text(satoshiToBTC(sent_by_address).toString() + ' BTC');
+      $.getJSON('https://blockchain.info/q/addressbalance/' + miner_hash + '?cors=true', function(data) {
+        var address_balance = data;
 
-    $('#current_balance')
-      .attr('data-value', satoshiToBTC(address_balance))
-      .text(parseFloat(satoshiToBTC(address_balance)).toString() + ' BTC');
+        $('#total_received')
+          .attr('data-value', satoshiToBTC(received_by_address))
+          .text(satoshiToBTC(received_by_address).toString() + ' BTC');
 
-    $('#num_transactions').text(num_transactions);
+        $('#total_sent')
+          .attr('data-value', satoshiToBTC(sent_by_address))
+          .text(satoshiToBTC(sent_by_address).toString() + ' BTC');
+
+        $('#current_balance')
+          .attr('data-value', satoshiToBTC(address_balance))
+          .text(parseFloat(satoshiToBTC(address_balance)).toString() + ' BTC');
+      });
+    });
   });
 }
 
