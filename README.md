@@ -24,14 +24,14 @@ This dashboard requires the use of a custom p2pool fork (https://github.com/jram
 Do this in the top directory of your p2pool installation:
 
 ``` Bash
-git clone https://github.com/jramos/p2pool-node-status.git web-static
+git submodule update
 ```
 
 and access via `http://<url-to-your-p2pool>:<port>/static`
 
 ## Configuration
 
-The `config.json` is found in `js` directory.
+The `config.json` is found in the `js` directory.
 
 ### Highlight your own miner address
 
