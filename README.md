@@ -27,7 +27,7 @@ Do this in the top directory of your p2pool installation:
 git submodule update
 ```
 
-and access via `http://<url-to-your-p2pool>:<port>/static`
+and access via `http://<url-to-your-p2pool>:<port>/static`. The default port is ``9332``.
 
 ## Configuration
 
