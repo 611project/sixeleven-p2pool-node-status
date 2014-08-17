@@ -436,8 +436,13 @@ $(document).on('update_bitcoind', function(e, eventInfo) {
 
   bitcoind_peer_avg_ping = (total / bitcoind_peer_pingtimes.length * 1e3);
 
-  $('#bitcoind_peer_latency')
-    .text(bitcoind_peer_avg_ping.toFixed(0).toString() + ' ms');
+  if (bitcoind_peer_avg_ping) {
+    $('#bitcoind_peer_latency')
+      .text(bitcoind_peer_avg_ping.toFixed(0).toString() + ' ms');
+  } else {
+    $('#bitcoind_peer_latency')
+      .html('&dash;');    
+  }
 });
 
 $(document).on('update_blockchain_info', function(e, eventInfo) {
