@@ -31,11 +31,9 @@ body {
 }
 
 #ad {
-  float: right;
-  margin-top: -10px;
-  margin-right: -10px;
+  width: 990px;
+  margin: 0 auto;
 }
-
 
 .container {
   padding: 0 20px;
@@ -144,4 +142,36 @@ div.pager span {
 
 div.pager span.active {
     background: #5bb75b;
+}
+
+.left {
+  float :left;
+}
+
+.right {
+  float: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.quarter-width {
+  width: 25%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+#status div {
+  padding: 10px;
 }

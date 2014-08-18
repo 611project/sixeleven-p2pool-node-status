@@ -122,7 +122,7 @@ function plot(g, unit, total_unit, lines, stack, proportion_view) {
     var w = 1100;
     var h = 300;
     var margin_v = 40;
-    var margin_h = 180;
+    var margin_h = 100;
     
     var x = d3.time.scale().domain([
         as_date(d3.min(lines, function(line) { return d3.min(line.data, itemgetter(0)); })),
