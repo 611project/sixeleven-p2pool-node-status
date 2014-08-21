@@ -97,7 +97,7 @@ to set it to 20 seconds for example.
 
 ### Bitcoin currency conversion
 
-By default, Bitcoin values are automatically converted to US dollars. This is accomplished by using real-time data from [BitcoinAverage](https://api.bitcoinaverage.com/ticker/all). To disable this feature, set the value of `convert_bitcoin_to_usd` to `false`.
+By default, Bitcoin values are automatically converted to US dollars. This is accomplished by using real-time data from [Blockchain.info](https://blockchain.info/). To disable this feature, set the value of `convert_bitcoin_to_usd` to `false`.
 
 ``` JavaScript
 var config = {
