@@ -195,10 +195,9 @@ $(document).on('update_miners', function(e, eventInfo) {
   }
 
   $('#shares')
-    .text('Total: ' + local_stats.shares.total
+    .text('Total: ' + (local_stats.shares.total - local_stats.shares.unknown)
     + ' (Orphan: ' + local_stats.shares.orphan
-    + ', Dead: ' + local_stats.shares.dead
-    + ', Unknown: ' + local_stats.shares.unknown + ')');
+    + ', Dead: ' + local_stats.shares.dead + ')');
 
   if(local_hashrate !== 0) {
     time_to_share=
@@ -316,14 +315,6 @@ $(document).on('update_shares', function(e, eventInfo) {
       tr.append($('<td/>').append(blockinfo));
       tr.append($('<td/>').append(address_link));
       tr.append($('<td/>').addClass('text-center').append(stale_info));
-      $('#recent_shares tbody').append(tr);
-    } else {
-      tr= $('<tr/>').attr('id', hash).addClass('greyed');
-      tr.append($('<td class="hidden"/>').text('0'));
-      tr.append($('<td/>').html('&dash;'));
-      tr.append($('<td/>').text(hash));
-      tr.append($('<td/>').html('&dash;'));
-      tr.append($('<td/>').addClass('text-center').html('<span class="red">unknown</span>'));
       $('#recent_shares tbody').append(tr);
     }
   });
