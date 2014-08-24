@@ -108,7 +108,14 @@ var toggleAudio = function () {
 
 var rotateAd = function () {
   if(config.ad_url && config.ad_url.length > 0) {
-    $("#ad").load(config.ad_url);
+    $("#ad").load(config.ad_url, function() {
+      if ($('.ad').length > 1) {
+        to_show = Math.round(Math.random());
+        $('.ad')[to_show].style.display = 'block';
+      } else if ($('.ad').length == 1) {
+        $('.ad')[0].style.display = 'block';
+      }
+    });
   }
 }
 
