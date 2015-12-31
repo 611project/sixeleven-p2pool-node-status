@@ -24,6 +24,7 @@ This dashboard requires the use of a custom p2pool fork (https://github.com/jram
 Do this in the top directory of your p2pool installation:
 
 ``` Bash
+git submodule init
 git submodule update
 ```
 
