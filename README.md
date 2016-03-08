@@ -13,8 +13,6 @@ A clean p2pool node dashboard. It provides:
 
 ![Screenshot](img/screenshot.png)
 
-### [Full demo here](http://bitcoin.ramosresearch.com)
-
 ## Note
 
 This dashboard requires the use of a custom p2pool fork (https://github.com/jramos/p2pool). The fork adds additional web interfaces for retrieving block and transaction information.
